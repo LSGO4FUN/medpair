@@ -136,17 +136,20 @@
                 <div id="tabMedicines" class="tab-content space-y-4">
                     <div class="flex justify-between items-center mb-2"><p class="text-xs text-gray-500">管理藥品庫存</p><button onclick="app.deleteSelectedMedicines()" class="text-red-600 text-xs hover:bg-red-50 px-2 py-1 rounded border border-transparent hover:border-red-100">刪除選取</button></div>
                     <button onclick="app.openAddMedicineModal()" class="w-full py-3 border-2 border-dashed border-theme0-300 bg-theme0-50/50 hover:bg-theme0-50 text-theme0-600 rounded-xl font-bold flex justify-center gap-2 mb-4 text-sm"><div class="bg-theme0-200 text-theme0-700 rounded-full w-5 h-5 flex items-center justify-center"><i class="fa-solid fa-plus text-[10px]"></i></div>新增一筆項目</button>
-                    <div id="settingsMedicineList" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+                    <!-- Medicines Grid: Mobile 2 cols -->
+                    <div id="settingsMedicineList" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2"></div>
                 </div>
                 <div id="tabCats" class="tab-content hidden space-y-3 max-w-3xl mx-auto"><div id="categorySettingsContainer" class="space-y-3"></div></div>
                 <div id="tabUsers" class="tab-content hidden space-y-4 max-w-2xl mx-auto">
-                    <div class="bg-white p-4 rounded-xl border shadow-sm">
-                        <h3 class="font-bold text-gray-800 mb-3 text-sm">新增使用者</h3>
-                        <div class="flex gap-2"><input type="text" id="newUserName" placeholder="輸入姓名" class="flex-1 border-gray-300 border p-2 rounded-lg text-sm outline-none"><button onclick="app.addUser()" class="bg-theme0-600 text-white px-4 py-2 rounded-lg text-sm font-medium shadow-md">新增</button></div>
+                    <!-- Compact User Add -->
+                    <div class="bg-white p-3 rounded-xl border shadow-sm">
+                        <h3 class="font-bold text-gray-800 mb-2 text-sm">新增使用者</h3>
+                        <div class="flex gap-2"><input type="text" id="newUserName" placeholder="輸入姓名" class="flex-1 border-gray-300 border px-2 py-1.5 rounded-lg text-sm outline-none"><button onclick="app.addUser()" class="bg-theme0-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium shadow-md">新增</button></div>
                     </div>
                     <div class="bg-white rounded-xl border shadow-sm overflow-hidden">
                         <div class="bg-gray-50 px-4 py-3 border-b flex justify-between items-center"><h4 class="font-bold text-gray-700 text-xs">使用者列表</h4><button onclick="app.deleteSelectedUsers()" class="text-red-500 text-xs hover:underline">刪除選取</button></div>
-                        <div id="settingsUserList" class="divide-y divide-gray-100"></div>
+                        <!-- Users Grid: Mobile 2 cols -->
+                        <div id="settingsUserList" class="grid grid-cols-2 gap-2 p-2"></div>
                     </div>
                 </div>
             </div>
@@ -308,14 +311,14 @@
                 if(!this.data.medicines.length) { c.innerHTML='<div class="col-span-full text-center text-gray-400 py-10">尚無資料</div>'; return; }
                 c.innerHTML = this.data.medicines.map(m => {
                     const idx = this.data.settings.types.indexOf(m.type); const t = getTypeThemeName(idx===-1?0:idx);
-                    return `<div class="flex items-center p-3 border rounded-xl shadow-sm bg-${t}-50 border-${t}-200">
+                    return `<div class="flex items-center p-2 border rounded-lg shadow-sm bg-${t}-50 border-${t}-200">
                         <div class="flex items-center justify-center mr-2"><input type="checkbox" class="med-delete-check w-4 h-4 rounded cursor-pointer" value="${m.id}"></div>
-                        ${m.icon ? `<img src="${m.icon}" class="w-10 h-10 rounded-lg object-cover border border-gray-100 mr-2">` : `<div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center mr-2 text-${t}-500 border border-gray-100"><i class="fa-solid fa-pills"></i></div>`}
+                        ${m.icon ? `<img src="${m.icon}" class="w-8 h-8 rounded-lg object-cover border border-gray-100 mr-2">` : `<div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center mr-2 text-${t}-500 border border-gray-100"><i class="fa-solid fa-pills text-xs"></i></div>`}
                         <div class="flex-grow cursor-pointer overflow-hidden" onclick="app.editMedicine('${m.id}')">
-                            <div class="font-bold text-gray-800 truncate text-sm">${m.name}</div>
-                            <div class="text-xs text-gray-500 mt-0.5 truncate">${m.stock} ${m.unit} | <span class="text-${t}-600 font-medium">${m.type}</span></div>
+                            <div class="font-bold text-gray-800 truncate text-xs">${m.name}</div>
+                            <div class="text-[10px] text-gray-500 mt-0.5 truncate">${m.stock} ${m.unit}</div>
                         </div>
-                        <button onclick="app.editMedicine('${m.id}')" class="w-7 h-7 rounded-full bg-white text-theme0-600 flex items-center justify-center shadow-sm ml-2 flex-shrink-0"><i class="fa-solid fa-pen text-xs"></i></button>
+                        <button onclick="app.editMedicine('${m.id}')" class="w-6 h-6 rounded-full bg-white text-theme0-600 flex items-center justify-center shadow-sm ml-1 flex-shrink-0"><i class="fa-solid fa-pen text-[10px]"></i></button>
                     </div>`;
                 }).join('');
             },
@@ -325,8 +328,8 @@
                 c.innerHTML = cats.map(k => `
                     <div class="bg-white rounded-xl border border-gray-100 shadow-sm">
                         <button onclick="app.toggleCategory('${k.key}')" class="w-full flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100 text-left"><h4 class="font-bold text-gray-700 flex items-center gap-2 text-sm"><span class="w-6 h-6 rounded-full bg-white text-theme0-600 shadow-sm flex items-center justify-center border border-gray-100"><i class="fa-solid ${k.icon} text-xs"></i></span>${k.label}</h4><i class="fa-solid fa-chevron-down text-gray-400 text-xs"></i></button>
-                        <div class="${this.state.activeCategory===k.key?'block':'hidden'} p-3 bg-white border-t border-gray-100">
-                            <div class="flex gap-2 mb-2"><input type="text" id="newCat_${k.key}" placeholder="新增..." class="flex-1 bg-gray-50 border rounded-lg px-3 py-1.5 text-sm outline-none"><button onclick="app.addCategoryItem('${k.key}')" class="bg-theme0-500 text-white w-8 h-8 rounded-lg shadow-md flex-shrink-0"><i class="fa-solid fa-plus text-xs"></i></button></div>
+                        <div class="${this.state.activeCategory===k.key?'block':'hidden'} p-2 bg-white border-t border-gray-100"> <!-- Changed p-3 to p-2 -->
+                            <div class="flex gap-2 mb-2 items-center"><input type="text" id="newCat_${k.key}" placeholder="新增..." class="flex-1 bg-gray-50 border rounded-lg px-2 py-1 text-sm outline-none"><button onclick="app.addCategoryItem('${k.key}')" class="bg-theme0-500 text-white w-7 h-7 rounded-lg shadow-md flex-shrink-0 flex items-center justify-center"><i class="fa-solid fa-plus text-xs"></i></button></div> <!-- Reduced button size and input padding -->
                             <div class="flex flex-wrap gap-2">${(this.data.settings[k.key]||[]).map(i => this.state.editMode.key===k.key && this.state.editMode.item===i ? 
                                 `<div class="inline-flex items-center gap-1 bg-white border border-theme0-300 rounded-full px-2 py-0.5"><input type="text" id="editInput_${k.key}" value="${i}" class="text-sm w-20 px-1 outline-none"><button onclick="app.saveCategoryEdit('${k.key}','${i}')" class="text-green-500"><i class="fa-solid fa-check"></i></button><button onclick="app.cancelEdit()" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button></div>` : 
                                 `<span class="inline-flex items-center gap-2 px-2 py-1 rounded-full bg-gray-50 text-gray-700 text-xs border border-gray-200 group">${i}<button onclick="app.startEditCategory('${k.key}','${i}')" class="text-gray-300 hover:text-theme0-600"><i class="fa-solid fa-pen text-[10px]"></i></button><div class="h-3 w-px bg-gray-300"></div><button onclick="app.deleteCategoryItem('${k.key}','${i}')" class="text-gray-300 hover:text-red-500"><i class="fa-solid fa-trash-can text-[10px]"></i></button></span>`).join('')}</div>
@@ -347,8 +350,8 @@
             },
             renderSettingsUsers() {
                 document.getElementById('settingsUserList').innerHTML = this.data.users.map(u => this.state.editMode.key==='user'&&this.state.editMode.item===u.id ? 
-                    `<div class="flex items-center justify-between p-3 bg-blue-50"><input type="text" id="editUserInput_${u.id}" value="${u.name}" class="bg-white border rounded px-2 py-1 text-sm flex-1"><button onclick="app.saveUserEdit('${u.id}','${u.name}')" class="text-green-600 font-bold ml-2 text-sm">儲存</button></div>` :
-                    `<div class="flex items-center justify-between p-3 hover:bg-gray-50 border-b border-gray-50"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-theme0-100 text-theme0-600 flex items-center justify-center font-bold text-xs">${u.name.charAt(0)}</div><span class="text-sm font-medium text-gray-700">${u.name}</span></div><div class="flex items-center gap-3"><button onclick="app.startEditUser('${u.id}')" class="text-gray-400"><i class="fa-solid fa-pen text-xs"></i></button><input type="checkbox" class="user-delete-check w-4 h-4" value="${u.id}"></div></div>`).join('');
+                    `<div class="flex items-center justify-between p-2 bg-blue-50 border rounded-lg mb-1"><input type="text" id="editUserInput_${u.id}" value="${u.name}" class="bg-white border rounded px-2 py-1 text-sm flex-1 w-full"><button onclick="app.saveUserEdit('${u.id}','${u.name}')" class="text-green-600 font-bold ml-2 text-xs">儲存</button></div>` :
+                    `<div class="flex items-center justify-between p-2 border rounded-lg border-gray-100 hover:bg-gray-50"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-theme0-100 text-theme0-600 flex items-center justify-center font-bold text-[10px]">${u.name.charAt(0)}</div><span class="text-xs font-medium text-gray-700 truncate max-w-[80px]">${u.name}</span></div><div class="flex items-center gap-2"><button onclick="app.startEditUser('${u.id}')" class="text-gray-400 w-6 h-6 flex items-center justify-center rounded hover:bg-gray-200"><i class="fa-solid fa-pen text-[10px]"></i></button><input type="checkbox" class="user-delete-check w-4 h-4" value="${u.id}"></div></div>`).join('');
             },
             startEditUser(id) { this.state.editMode={key:'user',item:id}; this.renderSettingsUsers(); },
             saveUserEdit(id, old) {
@@ -504,7 +507,7 @@
                 this.saveData(); this.closeModal('medModal'); this.showToast('已儲存'); this.renderSettingsMedicines();
             },
             handleImageUpload(input, k) { if(input.files[0]) compressImage(input.files[0]).then(b64=>{ this.state.tempImages[k]=b64; this.updateImagePreview(k,b64); }); },
-            updateImagePreview(k, src) { const p=document.getElementById(`${k}ImgPreview`); const btn=document.getElementById(`clear${k.charAt(0).toUpperCase()+k.slice(1)}ImgBtn`); if(src){p.innerHTML=`<img src="${src}" class="w-full h-full object-cover" onclick="app.viewImage('${src}')">`;p.classList.remove('border-dashed');btn.classList.remove('hidden');}else{p.innerHTML='<span class="text-gray-400 text-xs">無圖片</span>';p.classList.add('border-dashed');btn.classList.add('hidden');} },
+            updateImagePreview(k, src) { const p=document.getElementById(`${k}ImgPreview`); const btn=document.getElementById(`clear${k.charAt(0).toUpperCase()+k.slice(1)}ImgBtn`); if(src){p.innerHTML=`<img src="${src}" class="w-full h-full object-cover" onclick="window.app.viewImage('${src}')">`;p.classList.remove('border-dashed');btn.classList.remove('hidden');}else{p.innerHTML='<span class="text-gray-400 text-xs">無圖片</span>';p.classList.add('border-dashed');btn.classList.add('hidden');} },
             clearImage(k) { this.state.tempImages[k]=null; document.getElementById(`${k}ImgInput`).value=''; this.updateImagePreview(k,null); },
             viewImage(src) { document.getElementById('fullImageView').src=src; this.toggleModal('imageModal',true); },
             checkExpiry() { const n = this.data.medicines.filter(m=>isExpired(m.expiryDate)); document.getElementById('expiryAlert').classList.toggle('hidden', n.length===0); document.getElementById('expiryAlertContent').innerHTML=n.map(m=>`<span>• ${m.name} (${m.expiryDate})</span>`).join(''); },
