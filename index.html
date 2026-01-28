@@ -114,7 +114,9 @@
                         </div>
                         <button onclick="app.clearHistory()" class="text-xs text-gray-400 hover:text-red-500 underline ml-2 flex-shrink-0">清除</button>
                     </div>
-                    <div id="comboHistory" class="space-y-3 overflow-y-auto flex-grow pr-1 custom-scrollbar pb-10"></div>
+                    <div id="comboHistory" class="space-y-3 overflow-y-auto flex-grow pr-1 custom-scrollbar pb-10">
+                        <!-- History Items -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -123,32 +125,58 @@
     <!-- SETTINGS MODAL (Optimized for Mobile) -->
     <div id="settingsModal" class="modal fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 sm:p-6">
         <div class="modal-content bg-white w-full max-w-5xl h-[90vh] rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+            <!-- Header -->
             <div class="flex justify-between items-center p-4 border-b bg-gray-50 flex-shrink-0">
-                <h2 class="text-lg font-bold text-gray-800 flex items-center gap-2"><i class="fa-solid fa-sliders text-theme0-600"></i> 設定</h2>
-                <button onclick="app.closeModal('settingsModal')" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-200"><i class="fa-solid fa-xmark text-lg"></i></button>
+                <h2 class="text-lg font-bold text-gray-800 flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-theme0-600"></i> 設定
+                </h2>
+                <button onclick="window.app.closeModal('settingsModal')" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-200">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
             </div>
+            
+            <!-- Tabs -->
             <div class="flex border-b text-sm font-medium bg-white px-4 gap-4 overflow-x-auto flex-shrink-0">
-                <button onclick="app.switchTab('tabMedicines')" class="tab-btn py-3 border-b-2 border-theme0-600 text-theme0-600 whitespace-nowrap" data-target="tabMedicines">庫存項目</button>
-                <button onclick="app.switchTab('tabCats')" class="tab-btn py-3 border-b-2 border-transparent text-gray-500 hover:text-gray-700 whitespace-nowrap" data-target="tabCats">分類清單</button>
-                <button onclick="app.switchTab('tabUsers')" class="tab-btn py-3 border-b-2 border-transparent text-gray-500 hover:text-gray-700 whitespace-nowrap" data-target="tabUsers">使用者</button>
+                <button onclick="window.app.switchTab('tabMedicines')" class="tab-btn py-3 border-b-2 border-theme0-600 text-theme0-600 whitespace-nowrap" data-target="tabMedicines">庫存項目</button>
+                <button onclick="window.app.switchTab('tabCats')" class="tab-btn py-3 border-b-2 border-transparent text-gray-500 hover:text-gray-700 whitespace-nowrap" data-target="tabCats">分類清單</button>
+                <button onclick="window.app.switchTab('tabUsers')" class="tab-btn py-3 border-b-2 border-transparent text-gray-500 hover:text-gray-700 whitespace-nowrap" data-target="tabUsers">使用者</button>
             </div>
-            <div class="flex-grow overflow-y-auto bg-slate-50 p-4 pb-20 custom-scrollbar"> <!-- Added pb-20 to ensure bottom content is visible -->
+            
+            <!-- Content -->
+            <div class="flex-grow overflow-y-auto bg-slate-50 p-4 pb-20 custom-scrollbar">
+                
+                <!-- 1. Medicines -->
                 <div id="tabMedicines" class="tab-content space-y-4">
-                    <div class="flex justify-between items-center mb-2"><p class="text-xs text-gray-500">管理藥品庫存</p><button onclick="app.deleteSelectedMedicines()" class="text-red-600 text-xs hover:bg-red-50 px-2 py-1 rounded border border-transparent hover:border-red-100">刪除選取</button></div>
-                    <button onclick="app.openAddMedicineModal()" class="w-full py-3 border-2 border-dashed border-theme0-300 bg-theme0-50/50 hover:bg-theme0-50 text-theme0-600 rounded-xl font-bold flex justify-center gap-2 mb-4 text-sm"><div class="bg-theme0-200 text-theme0-700 rounded-full w-5 h-5 flex items-center justify-center"><i class="fa-solid fa-plus text-[10px]"></i></div>新增一筆項目</button>
-                    <!-- Medicines Grid: Mobile 2 cols -->
+                    <div class="flex justify-between items-center mb-2">
+                        <p class="text-xs text-gray-500">管理藥品庫存</p>
+                        <button onclick="window.app.deleteSelectedMedicines()" class="text-red-600 text-xs hover:bg-red-50 px-2 py-1 rounded border border-transparent hover:border-red-100">刪除選取</button>
+                    </div>
+                    <button onclick="window.app.openAddMedicineModal()" class="w-full py-3 border-2 border-dashed border-theme0-300 bg-theme0-50/50 hover:bg-theme0-50 text-theme0-600 rounded-xl font-bold flex justify-center gap-2 mb-4 text-sm">
+                        <div class="bg-theme0-200 text-theme0-700 rounded-full w-5 h-5 flex items-center justify-center"><i class="fa-solid fa-plus text-[10px]"></i></div>新增一筆項目
+                    </button>
                     <div id="settingsMedicineList" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2"></div>
                 </div>
-                <div id="tabCats" class="tab-content hidden space-y-3 max-w-3xl mx-auto"><div id="categorySettingsContainer" class="space-y-3"></div></div>
+
+                <!-- 2. Categories -->
+                <div id="tabCats" class="tab-content hidden space-y-3 max-w-3xl mx-auto">
+                    <div id="categorySettingsContainer" class="space-y-3"></div>
+                </div>
+
+                <!-- 3. Users -->
                 <div id="tabUsers" class="tab-content hidden space-y-4 max-w-2xl mx-auto">
                     <!-- Compact User Add -->
                     <div class="bg-white p-2 rounded-xl border shadow-sm">
                         <h3 class="font-bold text-gray-800 mb-2 text-sm">新增使用者</h3>
-                        <div class="flex gap-2"><input type="text" id="newUserName" placeholder="輸入姓名" class="flex-1 border-gray-300 border px-2 py-1.5 rounded-lg text-sm outline-none"><button onclick="app.addUser()" class="bg-theme0-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium shadow-md">新增</button></div>
+                        <div class="flex gap-2 items-center">
+                            <button onclick="window.app.addUser()" class="bg-theme0-500 text-white w-7 h-7 rounded-lg shadow-md flex-shrink-0 flex items-center justify-center"><i class="fa-solid fa-plus text-xs"></i></button>
+                            <input type="text" id="newUserName" placeholder="輸入姓名" class="flex-1 border-gray-300 border px-2 py-1.5 rounded-lg text-sm outline-none">
+                        </div>
                     </div>
                     <div class="bg-white rounded-xl border shadow-sm overflow-hidden">
-                        <div class="bg-gray-50 px-4 py-3 border-b flex justify-between items-center"><h4 class="font-bold text-gray-700 text-xs">使用者列表</h4><button onclick="app.deleteSelectedUsers()" class="text-red-500 text-xs hover:underline">刪除選取</button></div>
-                        <!-- Users Grid: Mobile 2 cols -->
+                        <div class="bg-gray-50 px-4 py-3 border-b flex justify-between items-center">
+                            <h4 class="font-bold text-gray-700 text-xs">使用者列表</h4>
+                            <button onclick="window.app.deleteSelectedUsers()" class="text-red-500 text-xs hover:underline">刪除選取</button>
+                        </div>
                         <div id="settingsUserList" class="grid grid-cols-2 gap-2 p-2"></div>
                     </div>
                 </div>
@@ -159,77 +187,251 @@
     <!-- MED MODAL -->
     <div id="medModal" class="modal fixed inset-0 z-[70] flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
         <div class="modal-content bg-white w-full max-w-3xl max-h-[90vh] rounded-xl shadow-2xl flex flex-col">
-            <div class="p-4 border-b flex justify-between items-center bg-gray-50 rounded-t-xl"><h3 class="font-bold text-lg text-gray-800" id="medModalTitle">新增項目</h3><button onclick="app.closeModal('medModal')" class="w-8 h-8 rounded-full hover:bg-gray-200 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button></div>
+            <div class="p-4 border-b flex justify-between items-center bg-gray-50 rounded-t-xl">
+                <h3 class="font-bold text-lg text-gray-800" id="medModalTitle">新增項目</h3>
+                <button onclick="window.app.closeModal('medModal')" class="w-8 h-8 rounded-full hover:bg-gray-200 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
             <div class="p-6 overflow-y-auto custom-scrollbar space-y-5">
                 <input type="hidden" id="medId">
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2" id="medTypeSelection"></div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div><label class="block text-sm font-bold text-gray-700 mb-1.5">項目名稱 <span class="text-red-500">*</span></label><input type="text" id="medName" class="w-full border-gray-300 border p-2.5 rounded-lg outline-none"></div>
-                    <div><label class="block text-sm font-medium text-gray-600 mb-1.5">學名 / 英文名</label><input type="text" id="medSciName" class="w-full border-gray-300 border p-2.5 rounded-lg bg-gray-50 outline-none"></div>
+                
+                <!-- TYPE SELECTION (Dynamic) -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2" id="medTypeSelection">
+                    <!-- JS populated -->
                 </div>
+
+                <!-- Basic Info -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div><label class="block text-sm font-medium text-gray-600 mb-1.5">外觀形狀</label><select id="medShape" class="w-full border-gray-300 border p-2.5 rounded-lg bg-white outline-none"></select></div>
-                    <div><label class="block text-sm font-medium text-gray-600 mb-1.5">專屬適用者 (可多選)</label><div id="medUsersContainer" class="flex flex-wrap gap-2 border border-gray-200 p-2 rounded-lg bg-gray-50 min-h-[42px]"></div></div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1.5">項目名稱 <span class="text-red-500">*</span></label>
+                        <input type="text" id="medName" class="w-full border-gray-300 border p-2.5 rounded-lg outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1.5">學名 / 英文名</label>
+                        <input type="text" id="medSciName" class="w-full border-gray-300 border p-2.5 rounded-lg bg-gray-50 outline-none">
+                    </div>
                 </div>
+
+                <!-- Attributes -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1.5">外觀形狀</label>
+                        <select id="medShape" class="w-full border-gray-300 border p-2.5 rounded-lg bg-white outline-none"></select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1.5">專屬適用者 (可多選)</label>
+                        <div id="medUsersContainer" class="flex flex-wrap gap-2 border border-gray-200 p-2 rounded-lg bg-gray-50 min-h-[42px]"></div>
+                    </div>
+                </div>
+
+                <!-- Tags Area (Unified Colors) -->
                 <div class="space-y-4 border-t border-gray-100 pt-4">
-                    <div><label class="block text-sm font-bold text-gray-600 mb-2">適應症 / 功效 (可多選)</label><div id="medIndicationContainer" class="flex flex-wrap gap-2 border border-gray-200 p-2 rounded-lg bg-gray-50 min-h-[42px]"></div></div>
-                    <div><label class="block text-sm font-bold text-gray-600 mb-2">使用方法 (可多選)</label><div id="medUsageContainer" class="flex flex-wrap gap-2 border border-gray-200 p-2 rounded-lg bg-gray-50 min-h-[42px]"></div></div>
-                    <div><label class="block text-sm font-bold text-gray-600 mb-2">使用劑量 (可多選)</label><div id="medDosageContainer" class="flex flex-wrap gap-2 border border-gray-200 p-2 rounded-lg bg-gray-50 min-h-[42px]"></div></div>
-                    <div><label class="block text-sm font-bold text-gray-600 mb-2">注意事項 (可多選)</label><div id="medPrecautionContainer" class="flex flex-wrap gap-2 border border-gray-200 p-2 rounded-lg bg-gray-50 min-h-[42px]"></div></div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">適應症 / 功效 (可多選)</label>
+                        <div id="medIndicationContainer" class="flex flex-wrap gap-2 border border-gray-200 p-2 rounded-lg bg-gray-50 min-h-[42px]"></div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">使用方法 (可多選)</label>
+                        <div id="medUsageContainer" class="flex flex-wrap gap-2 border border-gray-200 p-2 rounded-lg bg-gray-50 min-h-[42px]"></div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">使用劑量 (可多選)</label>
+                        <div id="medDosageContainer" class="flex flex-wrap gap-2 border border-gray-200 p-2 rounded-lg bg-gray-50 min-h-[42px]"></div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">注意事項 (可多選)</label>
+                        <div id="medPrecautionContainer" class="flex flex-wrap gap-2 border border-gray-200 p-2 rounded-lg bg-gray-50 min-h-[42px]"></div>
+                    </div>
                 </div>
+
+                <!-- Stock & Dates -->
                 <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 border-t border-gray-100 pt-4 bg-gray-50/50 p-3 rounded-lg">
-                    <div class="sm:col-span-4"><label class="block text-xs font-bold text-gray-500 mb-1">存量 *</label><div class="flex"><input type="number" id="medStock" class="w-full border-gray-300 border p-2 rounded-l-lg outline-none"><input type="text" id="medUnit" class="w-20 border-gray-300 border-y border-r p-2 rounded-r-lg bg-white text-center text-sm" placeholder="單位"></div></div>
-                    <div class="sm:col-span-4"><label class="block text-xs font-bold text-gray-500 mb-1">有效期限</label><input type="date" id="medExpiry" class="w-full border-gray-300 border p-2 rounded-lg outline-none"></div>
-                    <div class="sm:col-span-4"><label class="block text-xs font-bold text-gray-500 mb-1">取得日期</label><input type="date" id="medAcquired" class="w-full border-gray-300 border p-2 rounded-lg outline-none text-gray-500"></div>
+                    <div class="sm:col-span-4">
+                        <label class="block text-xs font-bold text-gray-500 mb-1">存量 *</label>
+                        <div class="flex">
+                            <input type="number" id="medStock" class="w-full border-gray-300 border p-2 rounded-l-lg outline-none">
+                            <input type="text" id="medUnit" class="w-20 border-gray-300 border-y border-r p-2 rounded-r-lg bg-white text-center text-sm" placeholder="單位">
+                        </div>
+                    </div>
+                    <div class="sm:col-span-4">
+                        <label class="block text-xs font-bold text-gray-500 mb-1">有效期限</label>
+                        <input type="date" id="medExpiry" class="w-full border-gray-300 border p-2 rounded-lg outline-none">
+                    </div>
+                    <div class="sm:col-span-4">
+                        <label class="block text-xs font-bold text-gray-500 mb-1">取得日期</label>
+                        <input type="date" id="medAcquired" class="w-full border-gray-300 border p-2 rounded-lg outline-none text-gray-500">
+                    </div>
                 </div>
+
+                <!-- Images -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
-                    <div><label class="block text-sm font-bold text-gray-700 mb-2">藥品外觀圖片</label><div class="flex items-start gap-4"><div id="medImgPreview" class="w-20 h-20 bg-gray-100 rounded-lg flex-shrink-0 border border-dashed border-gray-300 flex items-center justify-center overflow-hidden relative group"><span class="text-gray-400 text-xs">無圖片</span></div><div class="flex-grow"><input type="file" id="medImgInput" accept="image/*" class="block w-full text-xs text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:bg-theme0-50 file:text-theme0-700 hover:file:bg-theme0-100 cursor-pointer" onchange="app.handleImageUpload(this, 'med')"><button onclick="app.clearImage('med')" class="text-xs text-red-400 mt-1 hover:underline hidden" id="clearMedImgBtn">移除</button></div></div></div>
-                    <div><label class="block text-sm font-bold text-gray-700 mb-2">處方籤</label><div class="flex items-start gap-4"><div id="presImgPreview" class="w-20 h-20 bg-gray-100 rounded-lg flex-shrink-0 border border-dashed border-gray-300 flex items-center justify-center overflow-hidden relative group"><span class="text-gray-400 text-xs text-center px-1">無處方</span></div><div class="flex-grow"><input type="file" id="presImgInput" accept="image/*" class="block w-full text-xs text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:bg-theme0-50 file:text-theme0-700 hover:file:bg-theme0-100 cursor-pointer" onchange="app.handleImageUpload(this, 'pres')"><button onclick="app.clearImage('pres')" class="text-xs text-red-400 mt-1 hover:underline hidden" id="clearPresImgBtn">移除</button></div></div></div>
+                    <!-- Med Image -->
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">藥品外觀圖片</label>
+                        <div class="flex items-start gap-4">
+                            <div id="medImgPreview" class="w-20 h-20 bg-gray-100 rounded-lg flex-shrink-0 border border-dashed border-gray-300 flex items-center justify-center overflow-hidden relative group">
+                                <span class="text-gray-400 text-xs">無圖片</span>
+                            </div>
+                            <div class="flex-grow">
+                                <input type="file" id="medImgInput" accept="image/*" class="block w-full text-xs text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:bg-theme0-50 file:text-theme0-700 hover:file:bg-theme0-100 cursor-pointer" onchange="window.app.handleImageUpload(this, 'med')">
+                                <button onclick="window.app.clearImage('med')" class="text-xs text-red-400 mt-1 hover:underline hidden" id="clearMedImgBtn">移除</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Prescription Image -->
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">處方籤</label>
+                        <div class="flex items-start gap-4">
+                            <div id="presImgPreview" class="w-20 h-20 bg-gray-100 rounded-lg flex-shrink-0 border border-dashed border-gray-300 flex items-center justify-center overflow-hidden relative group">
+                                <span class="text-gray-400 text-xs text-center px-1">無處方</span>
+                            </div>
+                            <div class="flex-grow">
+                                <input type="file" id="presImgInput" accept="image/*" class="block w-full text-xs text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:bg-theme0-50 file:text-theme0-700 hover:file:bg-theme0-100 cursor-pointer" onchange="window.app.handleImageUpload(this, 'pres')">
+                                <button onclick="window.app.clearImage('pres')" class="text-xs text-red-400 mt-1 hover:underline hidden" id="clearPresImgBtn">移除</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            
             <div class="p-4 border-t bg-gray-50 rounded-b-xl flex justify-end gap-3">
-                <button onclick="app.closeModal('medModal')" class="px-5 py-2.5 text-gray-600 hover:bg-gray-200 rounded-lg font-medium">取消</button>
-                <button onclick="app.saveMedicine()" class="px-6 py-2.5 bg-theme0-600 text-white font-bold rounded-lg hover:bg-theme0-700 shadow-md active:scale-95">儲存</button>
+                <button onclick="window.app.closeModal('medModal')" class="px-5 py-2.5 text-gray-600 hover:bg-gray-200 rounded-lg font-medium">取消</button>
+                <button onclick="window.app.saveMedicine()" class="px-6 py-2.5 bg-theme0-600 text-white font-bold rounded-lg hover:bg-theme0-700 shadow-md active:scale-95">儲存</button>
             </div>
         </div>
     </div>
 
     <!-- SAVE COMBO MODAL -->
-    <div id="comboNameModal" class="modal fixed inset-0 z-[70] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4"><div class="modal-content bg-white w-full max-w-md rounded-xl shadow-2xl p-6 flex flex-col max-h-[90vh]"><div class="text-center mb-6"><div class="w-12 h-12 bg-theme1-100 text-theme1-600 rounded-full flex items-center justify-center mx-auto mb-3"><i class="fa-solid fa-check text-xl"></i></div><h3 class="text-lg font-bold text-gray-800">建立組合</h3></div><div class="flex-grow overflow-y-auto space-y-4 px-1 mb-6"><div><label class="block text-sm font-bold text-gray-700 mb-1.5">組合名稱</label><input type="text" id="comboNameInput" class="w-full border-gray-300 border p-3 rounded-xl focus:ring-2 focus:ring-theme0-500 outline-none text-center font-medium"></div><div><label class="block text-sm font-bold text-gray-700 mb-1.5">適用使用者 (可多選)</label><div id="comboUserSelection" class="grid grid-cols-2 gap-2"></div></div></div><div class="grid grid-cols-2 gap-3 pt-4 border-t border-gray-100"><button onclick="app.closeModal('comboNameModal')" class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">取消</button><button onclick="app.confirmSaveCombo()" class="px-4 py-2 bg-theme0-600 text-white rounded-lg font-bold shadow-md">確認儲存</button></div></div></div>
-    <div id="comboDetailModal" class="modal fixed inset-0 z-[70] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4"><div class="modal-content bg-white w-full max-w-lg max-h-[80vh] rounded-xl shadow-2xl flex flex-col overflow-hidden"><div class="p-5 border-b bg-gradient-to-r from-theme2-50 to-white"><h3 class="text-xl font-bold text-theme2-600" id="comboDetailTitle"></h3><p class="text-xs text-gray-500 flex items-center gap-1 mt-1"><i class="fa-regular fa-clock"></i> <span id="comboDetailTime"></span></p><div class="mt-2 flex flex-wrap gap-1 text-xs" id="comboDetailUsers"></div></div><div class="p-5 overflow-y-auto space-y-4 custom-scrollbar bg-white" id="comboDetailContent"></div><div class="p-4 border-t bg-gray-50 text-center"><button onclick="app.closeModal('comboDetailModal')" class="w-full px-4 py-2.5 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 font-medium">關閉視窗</button></div></div></div>
-    <div id="confirmModal" class="modal fixed inset-0 z-[80] flex items-center justify-center bg-slate-900/40 p-4"><div class="modal-content bg-white rounded-2xl shadow-xl p-6 max-w-sm w-full text-center"><h3 id="confirmTitle" class="text-lg font-bold text-gray-800 mb-2">確認</h3><p id="confirmMsg" class="text-gray-600 mb-6 text-sm"></p><div class="grid grid-cols-2 gap-3"><button onclick="app.closeConfirm(false)" class="px-4 py-2.5 border border-gray-300 rounded-xl hover:bg-gray-50 text-gray-700">取消</button><button onclick="app.closeConfirm(true)" class="px-4 py-2.5 bg-red-500 text-white rounded-xl shadow-md">確認執行</button></div></div></div>
-    <div id="imageModal" class="modal fixed inset-0 z-[90] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm" onclick="app.closeModal('imageModal')"><div class="relative max-w-4xl max-h-[90vh] w-full flex items-center justify-center"><button onclick="app.closeModal('imageModal')" class="absolute -top-10 right-0 text-white hover:text-gray-300 text-3xl"><i class="fa-solid fa-xmark"></i></button><img id="fullImageView" src="" class="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl" onclick="event.stopPropagation()"></div></div>
-    <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-800/90 backdrop-blur text-white px-6 py-3 rounded-full shadow-lg opacity-0 transition-all duration-300 pointer-events-none z-[100] text-sm flex items-center gap-3 translate-y-4"><i class="fa-solid fa-circle-check text-green-400 text-lg"></i><span id="toastMsg" class="font-medium">操作成功</span></div>
+    <div id="comboNameModal" class="modal fixed inset-0 z-[70] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+        <div class="modal-content bg-white w-full max-w-md rounded-xl shadow-2xl p-6 flex flex-col max-h-[90vh]">
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-theme1-100 text-theme1-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i class="fa-solid fa-check text-xl"></i>
+                </div>
+                <h3 class="text-lg font-bold text-gray-800">建立組合</h3>
+            </div>
+            <div class="flex-grow overflow-y-auto space-y-4 px-1 mb-6">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1.5">組合名稱</label>
+                    <input type="text" id="comboNameInput" class="w-full border-gray-300 border p-3 rounded-xl focus:ring-2 focus:ring-theme0-500 outline-none text-center font-medium">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1.5">適用使用者 (可多選)</label>
+                    <div id="comboUserSelection" class="grid grid-cols-2 gap-2"></div>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-3 pt-4 border-t border-gray-100">
+                <button onclick="window.app.closeModal('comboNameModal')" class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">取消</button>
+                <button onclick="window.app.confirmSaveCombo()" class="px-4 py-2 bg-theme0-600 text-white rounded-lg font-bold shadow-md">確認儲存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- COMBO DETAIL MODAL -->
+    <div id="comboDetailModal" class="modal fixed inset-0 z-[70] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+        <div class="modal-content bg-white w-full max-w-lg max-h-[80vh] rounded-xl shadow-2xl flex flex-col overflow-hidden">
+            <div class="p-5 border-b bg-gradient-to-r from-theme2-50 to-white">
+                <h3 class="text-xl font-bold text-theme2-600" id="comboDetailTitle"></h3>
+                <p class="text-xs text-gray-500 flex items-center gap-1 mt-1">
+                    <i class="fa-regular fa-clock"></i> 
+                    <span id="comboDetailTime"></span>
+                </p>
+                <div class="mt-2 flex flex-wrap gap-1 text-xs" id="comboDetailUsers"></div>
+            </div>
+            <div class="p-5 overflow-y-auto space-y-4 custom-scrollbar bg-white" id="comboDetailContent"></div>
+            <div class="p-4 border-t bg-gray-50 text-center">
+                <button onclick="window.app.closeModal('comboDetailModal')" class="w-full px-4 py-2.5 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 font-medium">關閉視窗</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONFIRM DIALOG -->
+    <div id="confirmModal" class="modal fixed inset-0 z-[80] flex items-center justify-center bg-slate-900/40 p-4">
+        <div class="modal-content bg-white rounded-2xl shadow-xl p-6 max-w-sm w-full text-center">
+            <h3 id="confirmTitle" class="text-lg font-bold text-gray-800 mb-2">確認</h3>
+            <p id="confirmMsg" class="text-gray-600 mb-6 text-sm"></p>
+            <div class="grid grid-cols-2 gap-3">
+                <button onclick="window.app.closeConfirm(false)" class="px-4 py-2.5 border border-gray-300 rounded-xl hover:bg-gray-50 text-gray-700">取消</button>
+                <button onclick="window.app.closeConfirm(true)" class="px-4 py-2.5 bg-red-500 text-white rounded-xl shadow-md">確認執行</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- IMAGE VIEWER MODAL -->
+    <div id="imageModal" class="modal fixed inset-0 z-[90] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm" onclick="window.app.closeModal('imageModal')">
+        <div class="relative max-w-4xl max-h-[90vh] w-full flex items-center justify-center">
+            <button onclick="window.app.closeModal('imageModal')" class="absolute -top-10 right-0 text-white hover:text-gray-300 text-3xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <img id="fullImageView" src="" class="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl" onclick="event.stopPropagation()">
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-800/90 backdrop-blur text-white px-6 py-3 rounded-full shadow-lg opacity-0 transition-all duration-300 pointer-events-none z-[100] text-sm flex items-center gap-3 translate-y-4">
+        <i class="fa-solid fa-circle-check text-green-400 text-lg"></i>
+        <span id="toastMsg" class="font-medium">操作成功</span>
+    </div>
 
     <script>
         // --- UTILS ---
         const generateId = () => Math.random().toString(36).substr(2, 9);
+        
         const compressImage = (file) => new Promise((resolve) => {
-            const reader = new FileReader(); reader.readAsDataURL(file);
-            reader.onload = (e) => { const img = new Image(); img.src = e.target.result; img.onload = () => {
-                const canvas = document.createElement('canvas'); let w = img.width, h = img.height; const max = 800;
-                if(w>max){ h=Math.round(h*max/w); w=max; } canvas.width=w; canvas.height=h;
-                canvas.getContext('2d').drawImage(img,0,0,w,h); resolve(canvas.toDataURL('image/jpeg',0.7));
-            }}
+            const reader = new FileReader(); 
+            reader.readAsDataURL(file);
+            reader.onload = (e) => { 
+                const img = new Image(); 
+                img.src = e.target.result; 
+                img.onload = () => {
+                    const canvas = document.createElement('canvas'); 
+                    let w = img.width, h = img.height; 
+                    const max = 800;
+                    if(w > max){ h=Math.round(h*max/w); w=max; } 
+                    canvas.width=w; canvas.height=h;
+                    canvas.getContext('2d').drawImage(img,0,0,w,h); 
+                    resolve(canvas.toDataURL('image/jpeg',0.7));
+                }
+            }
         });
+        
         const isExpired = (dateStr) => dateStr && new Date(dateStr) < new Date();
         const getTypeThemeName = (idx) => `theme${idx % 5}`;
 
         // APP LOGIC
         const app = {
-            data: { medicines: [], users: [], combinations: [], settings: { types: [], indications: [], usages: [], dosages: [], precautions: [], shapes: [] } },
-            state: { tempImages: { med: null, pres: null }, confirmCallback: null, historyFilterUid: null, activeCategory: 'types', selectedMedIds: [], editMode: { key: null, item: null }, filters: { types: [], indications: [], shapes: [], users: [] }, activeDropdown: null },
+            data: { 
+                medicines: [], 
+                users: [], 
+                combinations: [], 
+                settings: { types: [], indications: [], usages: [], dosages: [], precautions: [], shapes: [] } 
+            },
+            state: { 
+                tempImages: { med: null, pres: null }, 
+                confirmCallback: null, 
+                historyFilterUid: null, 
+                activeCategory: 'types', 
+                selectedMedIds: [], 
+                editMode: { key: null, item: null }, 
+                filters: { types: [], indications: [], shapes: [], users: [] }, 
+                activeDropdown: null 
+            },
 
             init() {
                 this.loadData();
                 document.getElementById('currentDateDisplay').innerText = new Date().toLocaleDateString('zh-TW');
-                document.addEventListener('click', (e) => { if (!e.target.closest('.relative.group')) this.closeAllDropdowns(); });
+                document.addEventListener('click', (e) => { 
+                    if (!e.target.closest('.relative.group')) this.closeAllDropdowns(); 
+                });
             },
 
             loadData() {
                 const stored = localStorage.getItem('medPairData_v2');
-                if (stored) { try { this.data = { ...this.data, ...JSON.parse(stored) }; } catch(e){} }
-                this.ensureDefaults(); this.refreshUI();
+                if (stored) { 
+                    try { this.data = { ...this.data, ...JSON.parse(stored) }; } catch(e){} 
+                }
+                this.ensureDefaults(); 
+                this.refreshUI();
             },
 
             saveData() {
@@ -238,7 +440,10 @@
             },
 
             refreshUI() {
-                this.checkExpiry(); this.renderHistory(); this.populateFilters(); this.renderReport();
+                this.checkExpiry(); 
+                this.renderHistory(); 
+                this.populateFilters(); 
+                this.renderReport();
                 if(document.getElementById('settingsModal').classList.contains('active')) {
                     if(this.state.activeCategory) this.renderSettingsCats();
                     if(document.getElementById('tabMedicines').style.display !== 'none') this.renderSettingsMedicines();
@@ -248,10 +453,17 @@
 
             ensureDefaults() {
                 let changed = false;
-                if (!this.data.users || this.data.users.length === 0) { this.data.users = [{id:generateId(),name:'爸爸'},{id:generateId(),name:'媽媽'},{id:generateId(),name:'自己'}]; changed = true; }
-                if (!this.data.settings.types || this.data.settings.types.length === 0) { this.data.settings.types = ['醫療藥品', '保健食品']; changed = true; }
+                if (!this.data.users || this.data.users.length === 0) { 
+                    this.data.users = [{id:generateId(),name:'爸爸'},{id:generateId(),name:'媽媽'},{id:generateId(),name:'自己'}]; 
+                    changed = true; 
+                }
+                if (!this.data.settings.types || this.data.settings.types.length === 0) { 
+                    this.data.settings.types = ['醫療藥品', '保健食品']; 
+                    changed = true; 
+                }
                 const sets = ['indications', 'usages', 'dosages', 'precautions', 'shapes'];
                 sets.forEach(k => { if (!this.data.settings[k]) this.data.settings[k] = []; });
+                
                 if(this.data.settings.indications.length < 3) { this.data.settings.indications = ['感冒', '頭痛', '腸胃不適', '過敏', '外傷']; changed = true; }
                 if(this.data.settings.usages.length < 3) { this.data.settings.usages = ['飯後服用', '飯前服用', '睡前服用', '外用塗抹', '必要時使用']; changed = true; }
                 if(this.data.settings.dosages.length < 3) { this.data.settings.dosages = ['每次 1 顆', '每次 2 顆', '一天 3 次', '一天 1 次', '睡前服用']; changed = true; }
@@ -281,12 +493,19 @@
                 const a = document.createElement('a'); a.href = url; a.download = `MedPair_Backup_${new Date().toISOString().split('T')[0]}.json`;
                 document.body.appendChild(a); a.click(); document.body.removeChild(a); this.showToast('備份檔案下載中');
             },
+
             triggerImport(input) {
                 if (!input.files || !input.files[0]) return;
                 this.confirm('匯入備份', '匯入將覆蓋目前資料，確定繼續？', () => {
                     const reader = new FileReader();
                     reader.onload = (e) => {
-                        try { this.data = JSON.parse(e.target.result); this.ensureDefaults(); this.saveData(); this.init(); this.showToast('資料匯入成功'); } 
+                        try { 
+                            this.data = JSON.parse(e.target.result); 
+                            this.ensureDefaults(); 
+                            this.saveData(); 
+                            this.init(); 
+                            this.showToast('資料匯入成功'); 
+                        } 
                         catch(err) { alert('匯入失敗：格式錯誤'); }
                         input.value = '';
                     };
@@ -299,48 +518,89 @@
             switchTab(tabId) {
                 document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
                 document.getElementById(tabId).classList.remove('hidden');
-                document.querySelectorAll('.tab-btn').forEach(el => { el.classList.remove('border-theme0-600', 'text-theme0-600'); el.classList.add('border-transparent', 'text-gray-500'); });
+                document.querySelectorAll('.tab-btn').forEach(el => { 
+                    el.classList.remove('border-theme0-600', 'text-theme0-600'); 
+                    el.classList.add('border-transparent', 'text-gray-500'); 
+                });
                 document.querySelector(`button[data-target="${tabId}"]`).classList.replace('border-transparent', 'border-theme0-600');
                 document.querySelector(`button[data-target="${tabId}"]`).classList.replace('text-gray-500', 'text-theme0-600');
                 if(tabId==='tabMedicines') this.renderSettingsMedicines();
                 if(tabId==='tabCats') this.renderSettingsCats();
                 if(tabId==='tabUsers') this.renderSettingsUsers();
             },
+            
             renderSettingsMedicines() {
                 const c = document.getElementById('settingsMedicineList');
                 if(!this.data.medicines.length) { c.innerHTML='<div class="col-span-full text-center text-gray-400 py-10">尚無資料</div>'; return; }
                 c.innerHTML = this.data.medicines.map(m => {
                     const idx = this.data.settings.types.indexOf(m.type); const t = getTypeThemeName(idx===-1?0:idx);
-                    return `<div class="flex items-center p-2 border rounded-lg shadow-sm bg-${t}-50 border-${t}-200">
-                        <div class="flex items-center justify-center mr-2"><input type="checkbox" class="med-delete-check w-4 h-4 rounded cursor-pointer" value="${m.id}"></div>
-                        ${m.icon ? `<img src="${m.icon}" class="w-8 h-8 rounded-lg object-cover border border-gray-100 mr-2">` : `<div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center mr-2 text-${t}-500 border border-gray-100"><i class="fa-solid fa-pills text-xs"></i></div>`}
-                        <div class="flex-grow cursor-pointer overflow-hidden" onclick="app.editMedicine('${m.id}')">
+                    return `
+                    <div class="flex items-center p-2 border rounded-lg shadow-sm bg-${t}-50 border-${t}-200">
+                        <div class="flex items-center justify-center mr-2">
+                            <input type="checkbox" class="med-delete-check w-4 h-4 rounded cursor-pointer" value="${m.id}">
+                        </div>
+                        ${m.icon ? 
+                            `<img src="${m.icon}" class="w-8 h-8 rounded-lg object-cover border border-gray-100 mr-2">` : 
+                            `<div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center mr-2 text-${t}-500 border border-gray-100"><i class="fa-solid fa-pills text-xs"></i></div>`
+                        }
+                        <div class="flex-grow cursor-pointer overflow-hidden" onclick="window.app.editMedicine('${m.id}')">
                             <div class="font-bold text-gray-800 truncate text-xs">${m.name}</div>
                             <div class="text-[10px] text-gray-500 mt-0.5 truncate">${m.stock} ${m.unit}</div>
                         </div>
-                        <button onclick="app.editMedicine('${m.id}')" class="w-6 h-6 rounded-full bg-white text-theme0-600 flex items-center justify-center shadow-sm ml-1 flex-shrink-0"><i class="fa-solid fa-pen text-[10px]"></i></button>
+                        <button onclick="window.app.editMedicine('${m.id}')" class="w-6 h-6 rounded-full bg-white text-theme0-600 flex items-center justify-center shadow-sm ml-1 flex-shrink-0"><i class="fa-solid fa-pen text-[10px]"></i></button>
                     </div>`;
                 }).join('');
             },
+
             renderSettingsCats() {
                 const c = document.getElementById('categorySettingsContainer');
-                const cats = [{ key: 'types', label: '種類', icon: 'fa-layer-group' }, { key: 'indications', label: '適應症', icon: 'fa-tag' }, { key: 'usages', label: '使用方法', icon: 'fa-list-check' }, { key: 'dosages', label: '使用劑量', icon: 'fa-eye-dropper' }, { key: 'precautions', label: '注意事項', icon: 'fa-triangle-exclamation' }, { key: 'shapes', label: '樣貌', icon: 'fa-shapes' }];
+                const cats = [
+                    { key: 'types', label: '種類', icon: 'fa-layer-group' }, 
+                    { key: 'indications', label: '適應症', icon: 'fa-tag' }, 
+                    { key: 'usages', label: '使用方法', icon: 'fa-list-check' }, 
+                    { key: 'dosages', label: '使用劑量', icon: 'fa-eye-dropper' }, 
+                    { key: 'precautions', label: '注意事項', icon: 'fa-triangle-exclamation' }, 
+                    { key: 'shapes', label: '樣貌', icon: 'fa-shapes' }
+                ];
+                
                 c.innerHTML = cats.map(k => `
                     <div class="bg-white rounded-xl border border-gray-100 shadow-sm">
-                        <button onclick="app.toggleCategory('${k.key}')" class="w-full flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100 text-left"><h4 class="font-bold text-gray-700 flex items-center gap-2 text-sm"><span class="w-6 h-6 rounded-full bg-white text-theme0-600 shadow-sm flex items-center justify-center border border-gray-100"><i class="fa-solid ${k.icon} text-xs"></i></span>${k.label}</h4><i class="fa-solid fa-chevron-down text-gray-400 text-xs"></i></button>
+                        <button onclick="window.app.toggleCategory('${k.key}')" class="w-full flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100 text-left">
+                            <h4 class="font-bold text-gray-700 flex items-center gap-2 text-sm">
+                                <span class="w-6 h-6 rounded-full bg-white text-theme0-600 shadow-sm flex items-center justify-center border border-gray-100"><i class="fa-solid ${k.icon} text-xs"></i></span>
+                                ${k.label}
+                            </h4>
+                            <i class="fa-solid fa-chevron-down text-gray-400 text-xs"></i>
+                        </button>
                         <div class="${this.state.activeCategory===k.key?'block':'hidden'} p-1 bg-white border-t border-gray-100">
-                            <div class="flex gap-2 mb-2 items-center"><input type="text" id="newCat_${k.key}" placeholder="新增..." class="flex-1 bg-gray-50 border rounded-lg px-2 py-1 text-sm outline-none"><button onclick="app.addCategoryItem('${k.key}')" class="bg-theme0-500 text-white w-7 h-7 rounded-lg shadow-md flex-shrink-0 flex items-center justify-center"><i class="fa-solid fa-plus text-xs"></i></button></div>
-                            <div class="flex flex-wrap gap-2">${(this.data.settings[k.key]||[]).map(i => this.state.editMode.key===k.key && this.state.editMode.item===i ? 
-                                `<div class="inline-flex items-center gap-1 bg-white border border-theme0-300 rounded-full px-2 py-0.5"><input type="text" id="editInput_${k.key}" value="${i}" class="text-sm w-20 px-1 outline-none"><button onclick="app.saveCategoryEdit('${k.key}','${i}')" class="text-green-500"><i class="fa-solid fa-check"></i></button><button onclick="app.cancelEdit()" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button></div>` : 
-                                `<span class="inline-flex items-center gap-2 px-2 py-1 rounded-full bg-gray-50 text-gray-700 text-xs border border-gray-200 group">${i}<button onclick="app.startEditCategory('${k.key}','${i}')" class="text-gray-300 hover:text-theme0-600"><i class="fa-solid fa-pen text-[10px]"></i></button><div class="h-3 w-px bg-gray-300"></div><button onclick="app.deleteCategoryItem('${k.key}','${i}')" class="text-gray-300 hover:text-red-500"><i class="fa-solid fa-trash-can text-[10px]"></i></button></span>`).join('')}</div>
+                            <div class="flex gap-2 mb-2 items-center">
+                                <button onclick="window.app.addCategoryItem('${k.key}')" class="bg-theme0-500 text-white w-7 h-7 rounded-lg shadow-md flex-shrink-0 flex items-center justify-center"><i class="fa-solid fa-plus text-xs"></i></button>
+                                <input type="text" id="newCat_${k.key}" placeholder="新增..." class="flex-1 bg-gray-50 border rounded-lg px-2 py-1 text-sm outline-none">
+                            </div>
+                            <div class="flex flex-wrap gap-2">
+                                ${(this.data.settings[k.key]||[]).map(i => this.state.editMode.key===k.key && this.state.editMode.item===i ? 
+                                `<div class="inline-flex items-center gap-1 bg-white border border-theme0-300 rounded-full px-2 py-0.5"><input type="text" id="editInput_${k.key}" value="${i}" class="text-sm w-20 px-1 outline-none"><button onclick="window.app.saveCategoryEdit('${k.key}','${i}')" class="text-green-500"><i class="fa-solid fa-check"></i></button><button onclick="window.app.cancelEdit()" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button></div>` : 
+                                `<span class="inline-flex items-center gap-2 px-2 py-1 rounded-full bg-gray-50 text-gray-700 text-xs border border-gray-200 group">${i}<button onclick="window.app.startEditCategory('${k.key}','${i}')" class="text-gray-300 hover:text-theme0-600"><i class="fa-solid fa-pen text-[10px]"></i></button><div class="h-3 w-px bg-gray-300"></div><button onclick="window.app.deleteCategoryItem('${k.key}','${i}')" class="text-gray-300 hover:text-red-500"><i class="fa-solid fa-trash-can text-[10px]"></i></button></span>`).join('')}
+                            </div>
                         </div>
                     </div>`).join('');
             },
+
             toggleCategory(k) { this.state.activeCategory = this.state.activeCategory === k ? null : k; this.state.editMode={key:null}; this.renderSettingsCats(); },
-            addCategoryItem(k) { const v=document.getElementById(`newCat_${k}`).value.trim(); if(v && !this.data.settings[k].includes(v)){this.data.settings[k].push(v);this.saveData();this.renderSettingsCats();} },
+            
+            addCategoryItem(k) { 
+                const v=document.getElementById(`newCat_${k}`).value.trim(); 
+                if(v && !this.data.settings[k].includes(v)){
+                    this.data.settings[k].push(v);
+                    this.saveData();
+                    this.renderSettingsCats();
+                } 
+            },
+            
             deleteCategoryItem(k, v) { if(confirm('確定刪除？')){this.data.settings[k]=this.data.settings[k].filter(i=>i!==v);this.saveData();this.renderSettingsCats();} },
             startEditCategory(k, i) { this.state.editMode={key:k,item:i}; this.renderSettingsCats(); setTimeout(()=>document.getElementById(`editInput_${k}`)?.focus(),50); },
             cancelEdit() { this.state.editMode={key:null}; this.renderSettingsCats(); this.renderSettingsUsers(); },
+            
             saveCategoryEdit(k, old) {
                 const val=document.getElementById(`editInput_${k}`).value.trim(); if(!val||val===old){this.cancelEdit();return;}
                 const idx=this.data.settings[k].indexOf(old); if(idx!==-1)this.data.settings[k][idx]=val;
@@ -348,11 +608,27 @@
                 if(p) { const up = (item) => { if(Array.isArray(item[p])) item[p]=item[p].map(v=>v===old?val:v); else if(item[p]===old) item[p]=val; }; this.data.medicines.forEach(up); this.data.combinations.forEach(c=>c.items.forEach(up)); }
                 this.saveData(); this.cancelEdit();
             },
+
             renderSettingsUsers() {
                 document.getElementById('settingsUserList').innerHTML = this.data.users.map(u => this.state.editMode.key==='user'&&this.state.editMode.item===u.id ? 
-                    `<div class="flex items-center justify-between p-2 bg-blue-50 border rounded-lg mb-1"><input type="text" id="editUserInput_${u.id}" value="${u.name}" class="bg-white border rounded px-2 py-1 text-sm flex-1 w-full"><button onclick="app.saveUserEdit('${u.id}','${u.name}')" class="text-green-600 font-bold ml-2 text-xs">儲存</button></div>` :
-                    `<div class="flex items-center justify-between p-2 border rounded-lg border-gray-100 hover:bg-gray-50"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-theme0-100 text-theme0-600 flex items-center justify-center font-bold text-[10px]">${u.name.charAt(0)}</div><span class="text-xs font-medium text-gray-700 truncate max-w-[80px]">${u.name}</span></div><div class="flex items-center gap-2"><button onclick="app.startEditUser('${u.id}')" class="text-gray-400 w-6 h-6 flex items-center justify-center rounded hover:bg-gray-200"><i class="fa-solid fa-pen text-[10px]"></i></button><input type="checkbox" class="user-delete-check w-4 h-4" value="${u.id}"></div></div>`).join('');
+                    `<div class="flex items-center justify-between p-2 bg-blue-50 border rounded-lg mb-1"><input type="text" id="editUserInput_${u.id}" value="${u.name}" class="bg-white border rounded px-2 py-1 text-sm flex-1 w-full"><button onclick="window.app.saveUserEdit('${u.id}','${u.name}')" class="text-green-600 font-bold ml-2 text-xs">儲存</button></div>` :
+                    `<div class="flex items-center justify-between p-2 border rounded-lg border-gray-100 hover:bg-gray-50"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-theme0-100 text-theme0-600 flex items-center justify-center font-bold text-[10px]">${u.name.charAt(0)}</div><span class="text-xs font-medium text-gray-700 truncate max-w-[80px]">${u.name}</span></div><div class="flex items-center gap-2"><button onclick="window.app.startEditUser('${u.id}')" class="text-gray-400 w-6 h-6 flex items-center justify-center rounded hover:bg-gray-200"><i class="fa-solid fa-pen text-[10px]"></i></button><input type="checkbox" class="user-delete-check w-4 h-4" value="${u.id}"></div></div>`).join('');
             },
+
+            addUser() {
+                const input = document.getElementById('newUserName');
+                const name = input.value.trim();
+                if(!name) return;
+                if(this.data.users.find(u => u.name === name)) {
+                    this.showToast('使用者已存在'); return;
+                }
+                this.data.users.push({ id: generateId(), name });
+                this.saveData();
+                this.renderSettingsUsers();
+                input.value = '';
+                this.showToast('使用者已新增');
+            },
+
             startEditUser(id) { this.state.editMode={key:'user',item:id}; this.renderSettingsUsers(); },
             saveUserEdit(id, old) {
                 const val=document.getElementById(`editUserInput_${id}`).value.trim(); if(!val||val===old){this.cancelEdit();return;}
@@ -381,7 +657,7 @@
             updateFilterState(k, cb) { if(cb.checked){if(!this.state.filters[k].includes(cb.value))this.state.filters[k].push(cb.value)}else{this.state.filters[k]=this.state.filters[k].filter(v=>v!==cb.value)} this.populateFilters(); },
             populateFilters() {
                 const build=(k, items)=>{
-                    const c=document.getElementById(`filterDropdown_${k}`); c.innerHTML = items.map(i => `<label class="flex items-center p-2 hover:bg-gray-50 cursor-pointer"><input type="checkbox" value="${i}" ${this.state.filters[k].includes(i)?'checked':''} class="multi-select-checkbox w-4 h-4 mr-2" onchange="app.updateFilterState('${k}', this)"><span class="text-sm">${i}</span></label>`).join('');
+                    const c=document.getElementById(`filterDropdown_${k}`); c.innerHTML = items.map(i => `<label class="flex items-center p-2 hover:bg-gray-50 cursor-pointer"><input type="checkbox" value="${i}" ${this.state.filters[k].includes(i)?'checked':''} class="multi-select-checkbox w-4 h-4 mr-2" onchange="window.app.updateFilterState('${k}', this)"><span class="text-sm">${i}</span></label>`).join('');
                     const l=document.getElementById(`filterLabel_${k}`); const len=this.state.filters[k].length; l.innerText = len===0 ? {types:'全部種類',indications:'全部功效',shapes:'全部樣貌',users:'全部使用者'}[k] : `已選 ${len} 項`; l.classList.toggle('text-theme0-600', len>0);
                 };
                 build('types', this.data.settings.types); build('indications', this.data.settings.indications); build('shapes', this.data.settings.shapes); build('users', this.data.users.map(u=>u.name));
@@ -409,12 +685,12 @@
                     const precs=Array.isArray(m.precaution)?m.precaution.join('、'):(m.precaution||'-');
                     return `
                     <label class="block relative group cursor-pointer select-none">
-                        <input type="checkbox" class="checkbox-card peer hidden" onchange="app.toggleSelection('${m.id}')" value="${m.id}">
+                        <input type="checkbox" class="checkbox-card peer hidden" onchange="window.app.toggleSelection('${m.id}')" value="${m.id}">
                         <div class="bg-white rounded-xl p-4 border shadow-sm flex gap-4 items-start relative overflow-hidden peer-checked:border-${t}-500 peer-checked:bg-${t}-50 border-${t}-200">
                             <div class="w-20 h-20 rounded-lg bg-gray-50 flex-shrink-0 flex items-center justify-center overflow-hidden border border-gray-100">${m.icon?`<img src="${m.icon}" class="w-full h-full object-cover">`:`<i class="fa-solid fa-pills text-${t}-500 text-2xl"></i>`}</div>
                             <div class="flex-grow min-w-0">
                                 <div class="flex flex-col sm:flex-row justify-between items-start gap-2">
-                                    <div class="flex items-center gap-2"><h3 class="font-bold text-lg text-gray-800">${m.name}</h3>${m.prescription?`<button onclick="event.preventDefault();app.viewImage('${m.prescription}')" class="text-accent underline font-bold text-sm">處方籤</button>`:''}</div>
+                                    <div class="flex items-center gap-2"><h3 class="font-bold text-lg text-gray-800">${m.name}</h3>${m.prescription?`<button onclick="event.preventDefault();window.app.viewImage('${m.prescription}')" class="text-accent underline font-bold text-sm">處方籤</button>`:''}</div>
                                     <span class="text-xs bg-${t}-50 text-${t}-700 px-2 py-1 rounded-md font-medium flex-shrink-0">${inds||'未分類'}</span>
                                 </div>
                                 <p class="text-xs text-gray-400 mb-1">${m.scientificName||''}</p>
@@ -445,7 +721,7 @@
                 const list = this.data.combinations.filter(c => !this.state.historyFilterUid || c.users.includes(this.state.historyFilterUid)).sort((a,b)=>new Date(b.date)-new Date(a.date));
                 document.getElementById('comboHistory').innerHTML = list.length===0 ? '<div class="text-center text-gray-400 py-10 border-2 border-dashed rounded-xl">無紀錄</div>' : list.map(c => {
                     const badges = c.items.slice(0,3).map(i=>{ const t=getTypeThemeName(this.data.settings.types.indexOf(i.type)); return `<span class="text-[10px] bg-${t}-50 text-${t}-700 px-1.5 py-0.5 rounded">${i.name}</span>` }).join('');
-                    return `<div onclick="app.showComboDetail('${c.id}')" class="bg-white border border-gray-100 rounded-xl p-4 shadow-sm hover:shadow-md cursor-pointer"><div class="flex justify-between items-start mb-1"><h4 class="font-bold text-gray-800 text-theme2-600">${c.name}</h4><span class="text-[10px] text-gray-400 bg-gray-50 px-1.5 py-0.5 rounded">${new Date(c.date).toLocaleDateString()}</span></div><div class="text-xs text-gray-500 mb-2 flex items-center gap-1"><i class="fa-solid fa-user-tag text-theme2-500"></i> 給: ${c.users.join('、')}</div><div class="flex flex-wrap gap-1">${badges}${c.items.length>3?`<span class="text-gray-400 text-[10px]">+${c.items.length-3}</span>`:''}</div></div>`;
+                    return `<div onclick="window.app.showComboDetail('${c.id}')" class="bg-white border border-gray-100 rounded-xl p-4 shadow-sm hover:shadow-md cursor-pointer"><div class="flex justify-between items-start mb-1"><h4 class="font-bold text-gray-800 text-theme2-600">${c.name}</h4><span class="text-[10px] text-gray-400 bg-gray-50 px-1.5 py-0.5 rounded">${new Date(c.date).toLocaleDateString()}</span></div><div class="text-xs text-gray-500 mb-2 flex items-center gap-1"><i class="fa-solid fa-user-tag text-theme2-500"></i> 給: ${c.users.join('、')}</div><div class="flex flex-wrap gap-1">${badges}${c.items.length>3?`<span class="text-gray-400 text-[10px]">+${c.items.length-3}</span>`:''}</div></div>`;
                 }).join('');
             },
             showComboDetail(id) {
@@ -468,24 +744,74 @@
                 document.getElementById('medName').value=m.name; document.getElementById('medSciName').value=m.scientificName||''; document.getElementById('medShape').value=m.shape;
                 document.getElementById('medStock').value=m.stock; document.getElementById('medUnit').value=m.unit; document.getElementById('medExpiry').value=m.expiryDate||''; document.getElementById('medAcquired').value=m.acquiredDate||'';
                 this.state.tempImages = { med: m.icon, pres: m.prescription }; this.updateImagePreview('med', m.icon); this.updateImagePreview('pres', m.prescription);
-                const tCont = document.getElementById('medTypeSelection'); tCont.innerHTML = this.data.settings.types.map((t,i)=>`<label class="flex-1 text-center cursor-pointer"><input type="radio" name="itemType" value="${t}" class="peer hidden" ${m.type===t?'checked':''}><div class="py-2 rounded-md text-sm font-bold text-gray-500 peer-checked:bg-white peer-checked:text-${getTypeThemeName(i)}-600 peer-checked:shadow-sm border border-transparent peer-checked:border-gray-100">${t}</div></label>`).join('');
+                const tCont = document.getElementById('medTypeSelection'); tCont.innerHTML = this.data.settings.types.map((t,i)=>`<label class="flex-1 text-center cursor-pointer"><input type="radio" name="itemType" value="${t}" class="peer hidden" ${m.type===t?'checked':''} onchange="window.app.handleTypeChange()"><div class="py-2 rounded-md text-sm font-bold text-gray-500 peer-checked:bg-white peer-checked:text-${getTypeThemeName(i)}-600 peer-checked:shadow-sm border border-transparent peer-checked:border-gray-100">${t}</div></label>`).join('');
                 document.getElementById('medUsersContainer').innerHTML = this.data.users.map(u => `<label class="inline-flex items-center cursor-pointer select-none"><input type="checkbox" class="peer hidden" name="medUser" value="${u.name}" ${m.users.includes(u.name)?'checked':''}><span class="px-2 py-1 rounded-md text-xs font-bold text-gray-400 bg-white border border-gray-200 peer-checked:bg-slate-600 peer-checked:text-white transition-all">${u.name}</span></label>`).join('');
                 this.populateFormDropdowns(m); this.toggleModal('medModal', true);
             },
             resetForm() {
                 ['medId','medName','medSciName','medStock','medUnit','medExpiry','medAcquired','medImgInput','presImgInput'].forEach(id=>document.getElementById(id).value='');
                 this.state.tempImages={med:null,pres:null}; this.updateImagePreview('med',null); this.updateImagePreview('pres',null);
-                document.getElementById('medTypeSelection').innerHTML = this.data.settings.types.map((t,i)=>`<label class="flex-1 text-center cursor-pointer"><input type="radio" name="itemType" value="${t}" class="peer hidden" ${i===0?'checked':''}><div class="py-2 rounded-md text-sm font-bold text-gray-500 peer-checked:bg-white peer-checked:text-${getTypeThemeName(i)}-600 peer-checked:shadow-sm border border-transparent peer-checked:border-gray-100">${t}</div></label>`).join('');
+                document.getElementById('medTypeSelection').innerHTML = this.data.settings.types.map((t,i)=>`<label class="flex-1 text-center cursor-pointer"><input type="radio" name="itemType" value="${t}" class="peer hidden" ${i===0?'checked':''} onchange="window.app.handleTypeChange()"><div class="py-2 rounded-md text-sm font-bold text-gray-500 peer-checked:bg-white peer-checked:text-${getTypeThemeName(i)}-600 peer-checked:shadow-sm border border-transparent peer-checked:border-gray-100">${t}</div></label>`).join('');
                 document.getElementById('medUsersContainer').innerHTML = this.data.users.map(u => `<label class="inline-flex items-center cursor-pointer select-none"><input type="checkbox" class="peer hidden" name="medUser" value="${u.name}"><span class="px-2 py-1 rounded-md text-xs font-bold text-gray-400 bg-white border border-gray-200 peer-checked:bg-slate-600 peer-checked:text-white transition-all">${u.name}</span></label>`).join('');
             },
+            
+            // New helper to handle dynamic type changing
+            handleTypeChange() {
+                // Get current selection of checkboxes to preserve them
+                const getChecks = (n) => Array.from(document.querySelectorAll(`input[name="${n}"]:checked`)).map(c=>c.value);
+                const currentSelections = {
+                    indication: getChecks('medIndication'),
+                    usage: getChecks('medUsage'),
+                    dosage: getChecks('medDosage'),
+                    precaution: getChecks('medPrecaution')
+                };
+                this.populateFormDropdowns(currentSelections);
+            },
+
             populateFormDropdowns(m = null) {
                 document.getElementById('medShape').innerHTML = '<option value="">請選擇...</option>' + this.data.settings.shapes.map(s=>`<option value="${s}" ${m?.shape===s?'selected':''}>${s}</option>`).join('');
-                const fill=(id, items, n, sel)=>document.getElementById(id).innerHTML = items.map(v => `<label class="inline-flex items-center cursor-pointer"><input type="checkbox" class="peer hidden" name="${n}" value="${v}" ${(sel&&sel.includes(v))?'checked':''}><span class="px-2 py-1 rounded-md text-xs font-medium text-gray-500 bg-white border border-gray-200 peer-checked:bg-theme0-50 peer-checked:text-theme0-700 peer-checked:border-theme0-300 hover:bg-gray-50">${v}</span></label>`).join('');
-                fill('medIndicationContainer',this.data.settings.indications,'medIndication',m?.indication);
-                fill('medUsageContainer',this.data.settings.usages,'medUsage',m?.usage);
-                fill('medDosageContainer',this.data.settings.dosages,'medDosage',m?.dosage);
-                fill('medPrecautionContainer',this.data.settings.precautions,'medPrecaution',m?.precaution);
+                
+                // Determine current theme based on selected type
+                const selectedType = document.querySelector('input[name="itemType"]:checked')?.value || this.data.settings.types[0];
+                const typeIdx = this.data.settings.types.indexOf(selectedType);
+                const theme = getTypeThemeName(typeIdx === -1 ? 0 : typeIdx);
+                
+                // Helper for Multi-Select Checkboxes with dynamic theme color
+                const fill=(id, items, n, sel)=>{
+                    const container = document.getElementById(id);
+                    // Determine selection: m could be medicine object OR the simple selection object from handleTypeChange
+                    // Check if 'sel' passed directly (e.g. m?.indication) OR if m has property n (e.g. m.indication)
+                    // If m is null, sel is undefined. 
+                    // If m is selection object from handleTypeChange, it has keys like 'indication' not 'medIndication'
+                    
+                    // Let's normalize selection array
+                    let arr = [];
+                    if(m) {
+                        // if m comes from handleTypeChange (keys: indication, usage, etc)
+                        // map 'medIndication' -> 'indication'
+                        const keyMap = { 'medIndication': 'indication', 'medUsage': 'usage', 'medDosage': 'dosage', 'medPrecaution': 'precaution' };
+                        const dataKey = keyMap[n];
+                        
+                        if(m[dataKey]) arr = m[dataKey]; // from handleTypeChange object
+                        else if(m[n]) arr = m[n]; // direct property? unlikely based on code
+                        else if(sel) arr = Array.isArray(sel) ? sel : [sel]; // from editMedicine pass
+                    } else if(sel) {
+                        arr = Array.isArray(sel) ? sel : [sel];
+                    }
+                    
+                    container.innerHTML = items.map(v => `
+                    <label class="inline-flex items-center cursor-pointer select-none">
+                        <input type="checkbox" class="peer hidden" name="${n}" value="${v}" ${arr.includes(v)?'checked':''}>
+                        <span class="px-2 py-1 rounded-md text-xs font-medium text-gray-500 bg-white border border-gray-200 peer-checked:bg-${theme}-50 peer-checked:text-${theme}-700 peer-checked:border-${theme}-300 hover:bg-gray-50 transition-all">${v}</span>
+                    </label>`).join('');
+                };
+                
+                fill('medIndicationContainer', this.data.settings.indications, 'medIndication', m?.indication);
+                fill('medUsageContainer', this.data.settings.usages, 'medUsage', m?.usage);
+                fill('medDosageContainer', this.data.settings.dosages, 'medDosage', m?.dosage);
+                fill('medPrecautionContainer', this.data.settings.precautions, 'medPrecaution', m?.precaution);
             },
+            
             saveMedicine() {
                 const id = document.getElementById('medId').value || generateId();
                 const name = document.getElementById('medName').value.trim();
