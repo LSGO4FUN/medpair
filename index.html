@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MedPair 藥品配對助手 (本機版)</title>
+    <title>MedPair 藥品配對助手 (本機加強版)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
@@ -49,7 +49,7 @@
                     <div class="bg-theme0-50 p-2 rounded-lg"><i class="fa-solid fa-notes-medical text-xl"></i></div>
                     <div class="flex flex-col">
                         <h1 class="font-bold text-lg sm:text-xl tracking-wide text-gray-800 leading-tight">MedPair</h1>
-                        <span class="text-[10px] text-gray-400 font-medium">本機儲存版</span>
+                        <span class="text-[10px] text-gray-400 font-medium">本機儲存加強版</span>
                     </div>
                 </div>
                 <div class="flex items-center gap-2 sm:gap-3">
@@ -122,61 +122,32 @@
         </div>
     </main>
 
-    <!-- SETTINGS MODAL (Optimized for Mobile) -->
+    <!-- SETTINGS MODAL -->
     <div id="settingsModal" class="modal fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 sm:p-6">
         <div class="modal-content bg-white w-full max-w-5xl h-[90vh] rounded-2xl shadow-2xl flex flex-col overflow-hidden">
-            <!-- Header -->
             <div class="flex justify-between items-center p-4 border-b bg-gray-50 flex-shrink-0">
-                <h2 class="text-lg font-bold text-gray-800 flex items-center gap-2">
-                    <i class="fa-solid fa-sliders text-theme0-600"></i> 設定
-                </h2>
-                <button onclick="window.app.closeModal('settingsModal')" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-200">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
+                <h2 class="text-lg font-bold text-gray-800 flex items-center gap-2"><i class="fa-solid fa-sliders text-theme0-600"></i> 設定</h2>
+                <button onclick="window.app.closeModal('settingsModal')" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-200"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
-            
-            <!-- Tabs -->
             <div class="flex border-b text-sm font-medium bg-white px-4 gap-4 overflow-x-auto flex-shrink-0">
-                <button onclick="window.app.switchTab('tabMedicines')" class="tab-btn py-3 border-b-2 border-theme0-600 text-theme0-600 whitespace-nowrap" data-target="tabMedicines">庫存項目</button>
-                <button onclick="window.app.switchTab('tabCats')" class="tab-btn py-3 border-b-2 border-transparent text-gray-500 hover:text-gray-700 whitespace-nowrap" data-target="tabCats">分類清單</button>
-                <button onclick="window.app.switchTab('tabUsers')" class="tab-btn py-3 border-b-2 border-transparent text-gray-500 hover:text-gray-700 whitespace-nowrap" data-target="tabUsers">使用者</button>
+                <button onclick="app.switchTab('tabMedicines')" class="tab-btn py-3 border-b-2 border-theme0-600 text-theme0-600 whitespace-nowrap" data-target="tabMedicines">庫存項目</button>
+                <button onclick="app.switchTab('tabCats')" class="tab-btn py-3 border-b-2 border-transparent text-gray-500 hover:text-gray-700 whitespace-nowrap" data-target="tabCats">分類清單</button>
+                <button onclick="app.switchTab('tabUsers')" class="tab-btn py-3 border-b-2 border-transparent text-gray-500 hover:text-gray-700 whitespace-nowrap" data-target="tabUsers">使用者</button>
             </div>
-            
-            <!-- Content -->
             <div class="flex-grow overflow-y-auto bg-slate-50 p-4 pb-20 custom-scrollbar">
-                
-                <!-- 1. Medicines -->
                 <div id="tabMedicines" class="tab-content space-y-4">
-                    <div class="flex justify-between items-center mb-2">
-                        <p class="text-xs text-gray-500">管理藥品庫存</p>
-                        <button onclick="window.app.deleteSelectedMedicines()" class="text-red-600 text-xs hover:bg-red-50 px-2 py-1 rounded border border-transparent hover:border-red-100">刪除選取</button>
-                    </div>
-                    <button onclick="window.app.openAddMedicineModal()" class="w-full py-3 border-2 border-dashed border-theme0-300 bg-theme0-50/50 hover:bg-theme0-50 text-theme0-600 rounded-xl font-bold flex justify-center gap-2 mb-4 text-sm">
-                        <div class="bg-theme0-200 text-theme0-700 rounded-full w-5 h-5 flex items-center justify-center"><i class="fa-solid fa-plus text-[10px]"></i></div>新增一筆項目
-                    </button>
+                    <div class="flex justify-between items-center mb-2"><p class="text-xs text-gray-500">管理藥品庫存</p><button onclick="app.deleteSelectedMedicines()" class="text-red-600 text-xs hover:bg-red-50 px-2 py-1 rounded border border-transparent hover:border-red-100">刪除選取</button></div>
+                    <button onclick="app.openAddMedicineModal()" class="w-full py-3 border-2 border-dashed border-theme0-300 bg-theme0-50/50 hover:bg-theme0-50 text-theme0-600 rounded-xl font-bold flex justify-center gap-2 mb-4 text-sm"><div class="bg-theme0-200 text-theme0-700 rounded-full w-5 h-5 flex items-center justify-center"><i class="fa-solid fa-plus text-[10px]"></i></div>新增一筆項目</button>
                     <div id="settingsMedicineList" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2"></div>
                 </div>
-
-                <!-- 2. Categories -->
-                <div id="tabCats" class="tab-content hidden space-y-3 max-w-3xl mx-auto">
-                    <div id="categorySettingsContainer" class="space-y-3"></div>
-                </div>
-
-                <!-- 3. Users -->
+                <div id="tabCats" class="tab-content hidden space-y-3 max-w-3xl mx-auto"><div id="categorySettingsContainer" class="space-y-3"></div></div>
                 <div id="tabUsers" class="tab-content hidden space-y-4 max-w-2xl mx-auto">
-                    <!-- Compact User Add -->
                     <div class="bg-white p-2 rounded-xl border shadow-sm">
                         <h3 class="font-bold text-gray-800 mb-2 text-sm">新增使用者</h3>
-                        <div class="flex gap-2 items-center">
-                            <button onclick="window.app.addUser()" class="bg-theme0-500 text-white w-7 h-7 rounded-lg shadow-md flex-shrink-0 flex items-center justify-center"><i class="fa-solid fa-plus text-xs"></i></button>
-                            <input type="text" id="newUserName" placeholder="輸入姓名" class="flex-1 border-gray-300 border px-2 py-1.5 rounded-lg text-sm outline-none">
-                        </div>
+                        <div class="flex gap-2 items-center"><button onclick="app.addUser()" class="bg-theme0-500 text-white w-7 h-7 rounded-lg shadow-md flex-shrink-0 flex items-center justify-center"><i class="fa-solid fa-plus text-xs"></i></button><input type="text" id="newUserName" placeholder="輸入姓名" class="flex-1 border-gray-300 border px-2 py-1.5 rounded-lg text-sm outline-none"></div>
                     </div>
                     <div class="bg-white rounded-xl border shadow-sm overflow-hidden">
-                        <div class="bg-gray-50 px-4 py-3 border-b flex justify-between items-center">
-                            <h4 class="font-bold text-gray-700 text-xs">使用者列表</h4>
-                            <button onclick="window.app.deleteSelectedUsers()" class="text-red-500 text-xs hover:underline">刪除選取</button>
-                        </div>
+                        <div class="bg-gray-50 px-4 py-3 border-b flex justify-between items-center"><h4 class="font-bold text-gray-700 text-xs">使用者列表</h4><button onclick="app.deleteSelectedUsers()" class="text-red-500 text-xs hover:underline">刪除選取</button></div>
                         <div id="settingsUserList" class="grid grid-cols-2 gap-2 p-2"></div>
                     </div>
                 </div>
@@ -187,113 +158,34 @@
     <!-- MED MODAL -->
     <div id="medModal" class="modal fixed inset-0 z-[70] flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
         <div class="modal-content bg-white w-full max-w-3xl max-h-[90vh] rounded-xl shadow-2xl flex flex-col">
-            <div class="p-4 border-b flex justify-between items-center bg-gray-50 rounded-t-xl">
-                <h3 class="font-bold text-lg text-gray-800" id="medModalTitle">新增項目</h3>
-                <button onclick="window.app.closeModal('medModal')" class="w-8 h-8 rounded-full hover:bg-gray-200 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            
+            <div class="p-4 border-b flex justify-between items-center bg-gray-50 rounded-t-xl"><h3 class="font-bold text-lg text-gray-800" id="medModalTitle">新增項目</h3><button onclick="window.app.closeModal('medModal')" class="w-8 h-8 rounded-full hover:bg-gray-200 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button></div>
             <div class="p-6 overflow-y-auto custom-scrollbar space-y-5">
                 <input type="hidden" id="medId">
-                
-                <!-- TYPE SELECTION (Dynamic) -->
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2" id="medTypeSelection">
-                    <!-- JS populated -->
-                </div>
-
-                <!-- Basic Info -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2" id="medTypeSelection"></div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1.5">項目名稱 <span class="text-red-500">*</span></label>
-                        <input type="text" id="medName" class="w-full border-gray-300 border p-2.5 rounded-lg outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-600 mb-1.5">學名 / 英文名</label>
-                        <input type="text" id="medSciName" class="w-full border-gray-300 border p-2.5 rounded-lg bg-gray-50 outline-none">
-                    </div>
+                    <div><label class="block text-sm font-bold text-gray-700 mb-1.5">項目名稱 <span class="text-red-500">*</span></label><input type="text" id="medName" class="w-full border-gray-300 border p-2.5 rounded-lg outline-none"></div>
+                    <div><label class="block text-sm font-medium text-gray-600 mb-1.5">學名 / 英文名</label><input type="text" id="medSciName" class="w-full border-gray-300 border p-2.5 rounded-lg bg-gray-50 outline-none"></div>
                 </div>
-
-                <!-- Attributes -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-600 mb-1.5">外觀形狀</label>
-                        <select id="medShape" class="w-full border-gray-300 border p-2.5 rounded-lg bg-white outline-none"></select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-600 mb-1.5">專屬適用者 (可多選)</label>
-                        <div id="medUsersContainer" class="flex flex-wrap gap-2 border border-gray-200 p-2 rounded-lg bg-gray-50 min-h-[42px]"></div>
-                    </div>
+                    <div><label class="block text-sm font-medium text-gray-600 mb-1.5">外觀形狀</label><select id="medShape" class="w-full border-gray-300 border p-2.5 rounded-lg bg-white outline-none"></select></div>
+                    <div><label class="block text-sm font-medium text-gray-600 mb-1.5">專屬適用者 (可多選)</label><div id="medUsersContainer" class="flex flex-wrap gap-2 border border-gray-200 p-2 rounded-lg bg-gray-50 min-h-[42px]"></div></div>
                 </div>
-
-                <!-- Tags Area (Unified Colors) -->
                 <div class="space-y-4 border-t border-gray-100 pt-4">
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">適應症 / 功效 (可多選)</label>
-                        <div id="medIndicationContainer" class="flex flex-wrap gap-2 border border-gray-200 p-2 rounded-lg bg-gray-50 min-h-[42px]"></div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">使用方法 (可多選)</label>
-                        <div id="medUsageContainer" class="flex flex-wrap gap-2 border border-gray-200 p-2 rounded-lg bg-gray-50 min-h-[42px]"></div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">使用劑量 (可多選)</label>
-                        <div id="medDosageContainer" class="flex flex-wrap gap-2 border border-gray-200 p-2 rounded-lg bg-gray-50 min-h-[42px]"></div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">注意事項 (可多選)</label>
-                        <div id="medPrecautionContainer" class="flex flex-wrap gap-2 border border-gray-200 p-2 rounded-lg bg-gray-50 min-h-[42px]"></div>
-                    </div>
+                    <div><label class="block text-sm font-bold text-gray-700 mb-2">適應症 / 功效 (可多選)</label><div id="medIndicationContainer" class="flex flex-wrap gap-2 border border-gray-200 p-2 rounded-lg bg-gray-50 min-h-[42px]"></div></div>
+                    <div><label class="block text-sm font-bold text-gray-700 mb-2">使用方法 (可多選)</label><div id="medUsageContainer" class="flex flex-wrap gap-2 border border-gray-200 p-2 rounded-lg bg-gray-50 min-h-[42px]"></div></div>
+                    <div><label class="block text-sm font-bold text-gray-700 mb-2">使用劑量 (可多選)</label><div id="medDosageContainer" class="flex flex-wrap gap-2 border border-gray-200 p-2 rounded-lg bg-gray-50 min-h-[42px]"></div></div>
+                    <div><label class="block text-sm font-bold text-gray-700 mb-2">注意事項 (可多選)</label><div id="medPrecautionContainer" class="flex flex-wrap gap-2 border border-gray-200 p-2 rounded-lg bg-gray-50 min-h-[42px]"></div></div>
                 </div>
-
-                <!-- Stock & Dates -->
                 <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 border-t border-gray-100 pt-4 bg-gray-50/50 p-3 rounded-lg">
-                    <div class="sm:col-span-4">
-                        <label class="block text-xs font-bold text-gray-500 mb-1">存量 *</label>
-                        <div class="flex">
-                            <input type="number" id="medStock" class="w-full border-gray-300 border p-2 rounded-l-lg outline-none">
-                            <input type="text" id="medUnit" class="w-20 border-gray-300 border-y border-r p-2 rounded-r-lg bg-white text-center text-sm" placeholder="單位">
-                        </div>
-                    </div>
-                    <div class="sm:col-span-4">
-                        <label class="block text-xs font-bold text-gray-500 mb-1">有效期限</label>
-                        <input type="date" id="medExpiry" class="w-full border-gray-300 border p-2 rounded-lg outline-none">
-                    </div>
-                    <div class="sm:col-span-4">
-                        <label class="block text-xs font-bold text-gray-500 mb-1">取得日期</label>
-                        <input type="date" id="medAcquired" class="w-full border-gray-300 border p-2 rounded-lg outline-none text-gray-500">
-                    </div>
+                    <div class="sm:col-span-4"><label class="block text-xs font-bold text-gray-500 mb-1">存量 *</label><div class="flex"><input type="number" id="medStock" class="w-full border-gray-300 border p-2 rounded-l-lg outline-none"><input type="text" id="medUnit" class="w-20 border-gray-300 border-y border-r p-2 rounded-r-lg bg-white text-center text-sm" placeholder="單位"></div></div>
+                    <div class="sm:col-span-4"><label class="block text-xs font-bold text-gray-500 mb-1">有效期限</label><input type="date" id="medExpiry" class="w-full border-gray-300 border p-2 rounded-lg outline-none"></div>
+                    <div class="sm:col-span-4"><label class="block text-xs font-bold text-gray-500 mb-1">取得日期</label><input type="date" id="medAcquired" class="w-full border-gray-300 border p-2 rounded-lg outline-none text-gray-500"></div>
                 </div>
-
-                <!-- Images -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
-                    <!-- Med Image -->
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">藥品外觀圖片</label>
-                        <div class="flex items-start gap-4">
-                            <div id="medImgPreview" class="w-20 h-20 bg-gray-100 rounded-lg flex-shrink-0 border border-dashed border-gray-300 flex items-center justify-center overflow-hidden relative group">
-                                <span class="text-gray-400 text-xs">無圖片</span>
-                            </div>
-                            <div class="flex-grow">
-                                <input type="file" id="medImgInput" accept="image/*" class="block w-full text-xs text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:bg-theme0-50 file:text-theme0-700 hover:file:bg-theme0-100 cursor-pointer" onchange="window.app.handleImageUpload(this, 'med')">
-                                <button onclick="window.app.clearImage('med')" class="text-xs text-red-400 mt-1 hover:underline hidden" id="clearMedImgBtn">移除</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Prescription Image -->
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">處方籤</label>
-                        <div class="flex items-start gap-4">
-                            <div id="presImgPreview" class="w-20 h-20 bg-gray-100 rounded-lg flex-shrink-0 border border-dashed border-gray-300 flex items-center justify-center overflow-hidden relative group">
-                                <span class="text-gray-400 text-xs text-center px-1">無處方</span>
-                            </div>
-                            <div class="flex-grow">
-                                <input type="file" id="presImgInput" accept="image/*" class="block w-full text-xs text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:bg-theme0-50 file:text-theme0-700 hover:file:bg-theme0-100 cursor-pointer" onchange="window.app.handleImageUpload(this, 'pres')">
-                                <button onclick="window.app.clearImage('pres')" class="text-xs text-red-400 mt-1 hover:underline hidden" id="clearPresImgBtn">移除</button>
-                            </div>
-                        </div>
-                    </div>
+                    <div><label class="block text-sm font-bold text-gray-700 mb-2">藥品外觀圖片</label><div class="flex items-start gap-4"><div id="medImgPreview" class="w-20 h-20 bg-gray-100 rounded-lg flex-shrink-0 border border-dashed border-gray-300 flex items-center justify-center overflow-hidden relative group"><span class="text-gray-400 text-xs">無圖片</span></div><div class="flex-grow"><input type="file" id="medImgInput" accept="image/*" class="block w-full text-xs text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:bg-theme0-50 file:text-theme0-700 hover:file:bg-theme0-100 cursor-pointer" onchange="window.app.handleImageUpload(this, 'med')"><button onclick="window.app.clearImage('med')" class="text-xs text-red-400 mt-1 hover:underline hidden" id="clearMedImgBtn">移除</button></div></div></div>
+                    <div><label class="block text-sm font-bold text-gray-700 mb-2">處方籤</label><div class="flex items-start gap-4"><div id="presImgPreview" class="w-20 h-20 bg-gray-100 rounded-lg flex-shrink-0 border border-dashed border-gray-300 flex items-center justify-center overflow-hidden relative group"><span class="text-gray-400 text-xs text-center px-1">無處方</span></div><div class="flex-grow"><input type="file" id="presImgInput" accept="image/*" class="block w-full text-xs text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:bg-theme0-50 file:text-theme0-700 hover:file:bg-theme0-100 cursor-pointer" onchange="window.app.handleImageUpload(this, 'pres')"><button onclick="window.app.clearImage('pres')" class="text-xs text-red-400 mt-1 hover:underline hidden" id="clearPresImgBtn">移除</button></div></div></div>
                 </div>
             </div>
-            
             <div class="p-4 border-t bg-gray-50 rounded-b-xl flex justify-end gap-3">
                 <button onclick="window.app.closeModal('medModal')" class="px-5 py-2.5 text-gray-600 hover:bg-gray-200 rounded-lg font-medium">取消</button>
                 <button onclick="window.app.saveMedicine()" class="px-6 py-2.5 bg-theme0-600 text-white font-bold rounded-lg hover:bg-theme0-700 shadow-md active:scale-95">儲存</button>
@@ -302,148 +194,66 @@
     </div>
 
     <!-- SAVE COMBO MODAL -->
-    <div id="comboNameModal" class="modal fixed inset-0 z-[70] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
-        <div class="modal-content bg-white w-full max-w-md rounded-xl shadow-2xl p-6 flex flex-col max-h-[90vh]">
-            <div class="text-center mb-6">
-                <div class="w-12 h-12 bg-theme1-100 text-theme1-600 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <i class="fa-solid fa-check text-xl"></i>
-                </div>
-                <h3 class="text-lg font-bold text-gray-800">建立組合</h3>
-            </div>
-            <div class="flex-grow overflow-y-auto space-y-4 px-1 mb-6">
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1.5">組合名稱</label>
-                    <input type="text" id="comboNameInput" class="w-full border-gray-300 border p-3 rounded-xl focus:ring-2 focus:ring-theme0-500 outline-none text-center font-medium">
-                </div>
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1.5">適用使用者 (可多選)</label>
-                    <div id="comboUserSelection" class="grid grid-cols-2 gap-2"></div>
-                </div>
-            </div>
-            <div class="grid grid-cols-2 gap-3 pt-4 border-t border-gray-100">
-                <button onclick="window.app.closeModal('comboNameModal')" class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">取消</button>
-                <button onclick="window.app.confirmSaveCombo()" class="px-4 py-2 bg-theme0-600 text-white rounded-lg font-bold shadow-md">確認儲存</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- COMBO DETAIL MODAL -->
-    <div id="comboDetailModal" class="modal fixed inset-0 z-[70] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
-        <div class="modal-content bg-white w-full max-w-lg max-h-[80vh] rounded-xl shadow-2xl flex flex-col overflow-hidden">
-            <div class="p-5 border-b bg-gradient-to-r from-theme2-50 to-white">
-                <h3 class="text-xl font-bold text-theme2-600" id="comboDetailTitle"></h3>
-                <p class="text-xs text-gray-500 flex items-center gap-1 mt-1">
-                    <i class="fa-regular fa-clock"></i> 
-                    <span id="comboDetailTime"></span>
-                </p>
-                <div class="mt-2 flex flex-wrap gap-1 text-xs" id="comboDetailUsers"></div>
-            </div>
-            <div class="p-5 overflow-y-auto space-y-4 custom-scrollbar bg-white" id="comboDetailContent"></div>
-            <div class="p-4 border-t bg-gray-50 text-center">
-                <button onclick="window.app.closeModal('comboDetailModal')" class="w-full px-4 py-2.5 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 font-medium">關閉視窗</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- CONFIRM DIALOG -->
-    <div id="confirmModal" class="modal fixed inset-0 z-[80] flex items-center justify-center bg-slate-900/40 p-4">
-        <div class="modal-content bg-white rounded-2xl shadow-xl p-6 max-w-sm w-full text-center">
-            <h3 id="confirmTitle" class="text-lg font-bold text-gray-800 mb-2">確認</h3>
-            <p id="confirmMsg" class="text-gray-600 mb-6 text-sm"></p>
-            <div class="grid grid-cols-2 gap-3">
-                <button onclick="window.app.closeConfirm(false)" class="px-4 py-2.5 border border-gray-300 rounded-xl hover:bg-gray-50 text-gray-700">取消</button>
-                <button onclick="window.app.closeConfirm(true)" class="px-4 py-2.5 bg-red-500 text-white rounded-xl shadow-md">確認執行</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- IMAGE VIEWER MODAL -->
-    <div id="imageModal" class="modal fixed inset-0 z-[90] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm" onclick="window.app.closeModal('imageModal')">
-        <div class="relative max-w-4xl max-h-[90vh] w-full flex items-center justify-center">
-            <button onclick="window.app.closeModal('imageModal')" class="absolute -top-10 right-0 text-white hover:text-gray-300 text-3xl">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <img id="fullImageView" src="" class="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl" onclick="event.stopPropagation()">
-        </div>
-    </div>
-
-    <!-- TOAST -->
-    <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-800/90 backdrop-blur text-white px-6 py-3 rounded-full shadow-lg opacity-0 transition-all duration-300 pointer-events-none z-[100] text-sm flex items-center gap-3 translate-y-4">
-        <i class="fa-solid fa-circle-check text-green-400 text-lg"></i>
-        <span id="toastMsg" class="font-medium">操作成功</span>
-    </div>
+    <div id="comboNameModal" class="modal fixed inset-0 z-[70] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4"><div class="modal-content bg-white w-full max-w-md rounded-xl shadow-2xl p-6 flex flex-col max-h-[90vh]"><div class="text-center mb-6"><div class="w-12 h-12 bg-theme1-100 text-theme1-600 rounded-full flex items-center justify-center mx-auto mb-3"><i class="fa-solid fa-check text-xl"></i></div><h3 class="text-lg font-bold text-gray-800">建立組合</h3></div><div class="flex-grow overflow-y-auto space-y-4 px-1 mb-6"><div><label class="block text-sm font-bold text-gray-700 mb-1.5">組合名稱</label><input type="text" id="comboNameInput" class="w-full border-gray-300 border p-3 rounded-xl focus:ring-2 focus:ring-theme0-500 outline-none text-center font-medium"></div><div><label class="block text-sm font-bold text-gray-700 mb-1.5">適用使用者 (可多選)</label><div id="comboUserSelection" class="grid grid-cols-2 gap-2"></div></div></div><div class="grid grid-cols-2 gap-3 pt-4 border-t border-gray-100"><button onclick="window.app.closeModal('comboNameModal')" class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">取消</button><button onclick="window.app.confirmSaveCombo()" class="px-4 py-2 bg-theme0-600 text-white rounded-lg font-bold shadow-md">確認儲存</button></div></div></div>
+    <div id="comboDetailModal" class="modal fixed inset-0 z-[70] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4"><div class="modal-content bg-white w-full max-w-lg max-h-[80vh] rounded-xl shadow-2xl flex flex-col overflow-hidden"><div class="p-5 border-b bg-gradient-to-r from-theme2-50 to-white"><h3 class="text-xl font-bold text-theme2-600" id="comboDetailTitle"></h3><p class="text-xs text-gray-500 flex items-center gap-1 mt-1"><i class="fa-regular fa-clock"></i> <span id="comboDetailTime"></span></p><div class="mt-2 flex flex-wrap gap-1 text-xs" id="comboDetailUsers"></div></div><div class="p-5 overflow-y-auto space-y-4 custom-scrollbar bg-white" id="comboDetailContent"></div><div class="p-4 border-t bg-gray-50 text-center"><button onclick="window.app.closeModal('comboDetailModal')" class="w-full px-4 py-2.5 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 font-medium">關閉視窗</button></div></div></div>
+    <div id="confirmModal" class="modal fixed inset-0 z-[80] flex items-center justify-center bg-slate-900/40 p-4"><div class="modal-content bg-white rounded-2xl shadow-xl p-6 max-w-sm w-full text-center"><h3 id="confirmTitle" class="text-lg font-bold text-gray-800 mb-2">確認</h3><p id="confirmMsg" class="text-gray-600 mb-6 text-sm"></p><div class="grid grid-cols-2 gap-3"><button onclick="window.app.closeConfirm(false)" class="px-4 py-2.5 border border-gray-300 rounded-xl hover:bg-gray-50 text-gray-700">取消</button><button onclick="window.app.closeConfirm(true)" class="px-4 py-2.5 bg-red-500 text-white rounded-xl shadow-md">確認執行</button></div></div></div>
+    <div id="imageModal" class="modal fixed inset-0 z-[90] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm" onclick="window.app.closeModal('imageModal')"><div class="relative max-w-4xl max-h-[90vh] w-full flex items-center justify-center"><button onclick="window.app.closeModal('imageModal')" class="absolute -top-10 right-0 text-white hover:text-gray-300 text-3xl"><i class="fa-solid fa-xmark"></i></button><img id="fullImageView" src="" class="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl" onclick="event.stopPropagation()"></div></div>
+    <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-800/90 backdrop-blur text-white px-6 py-3 rounded-full shadow-lg opacity-0 transition-all duration-300 pointer-events-none z-[100] text-sm flex items-center gap-3 translate-y-4"><i class="fa-solid fa-circle-check text-green-400 text-lg"></i><span id="toastMsg" class="font-medium">操作成功</span></div>
 
     <script>
-        // --- UTILS ---
         const generateId = () => Math.random().toString(36).substr(2, 9);
-        
         const compressImage = (file) => new Promise((resolve) => {
-            const reader = new FileReader(); 
-            reader.readAsDataURL(file);
-            reader.onload = (e) => { 
-                const img = new Image(); 
-                img.src = e.target.result; 
-                img.onload = () => {
-                    const canvas = document.createElement('canvas'); 
-                    let w = img.width, h = img.height; 
-                    const max = 800;
-                    if(w > max){ h=Math.round(h*max/w); w=max; } 
-                    canvas.width=w; canvas.height=h;
-                    canvas.getContext('2d').drawImage(img,0,0,w,h); 
-                    resolve(canvas.toDataURL('image/jpeg',0.7));
-                }
-            }
+            const reader = new FileReader(); reader.readAsDataURL(file);
+            reader.onload = (e) => { const img = new Image(); img.src = e.target.result; img.onload = () => {
+                const canvas = document.createElement('canvas'); let w = img.width, h = img.height; const max = 800;
+                if(w>max){ h=Math.round(h*max/w); w=max; } canvas.width=w; canvas.height=h;
+                canvas.getContext('2d').drawImage(img,0,0,w,h); resolve(canvas.toDataURL('image/jpeg',0.7));
+            }}
         });
-        
         const isExpired = (dateStr) => dateStr && new Date(dateStr) < new Date();
         const getTypeThemeName = (idx) => `theme${idx % 5}`;
 
-        // APP LOGIC
+        // DB Helper
+        const IDBStorage = {
+            dbName: 'MedPairDB', storeName: 'dataStore', key: 'v1',
+            async open() { return new Promise((res, rej) => { const r=indexedDB.open(this.dbName, 1); r.onupgradeneeded=(e)=>{if(!e.target.result.objectStoreNames.contains(this.storeName))e.target.result.createObjectStore(this.storeName)}; r.onsuccess=()=>res(r.result); r.onerror=e=>rej(e); }); },
+            async save(data) { const db=await this.open(); return new Promise((res,rej)=>{ const tx=db.transaction(this.storeName,'readwrite'); tx.objectStore(this.storeName).put(data, this.key); tx.oncomplete=()=>res(); tx.onerror=e=>rej(e); }); },
+            async load() { const db=await this.open(); return new Promise((res,rej)=>{ const r=db.transaction(this.storeName,'readonly').objectStore(this.storeName).get(this.key); r.onsuccess=()=>res(r.result); r.onerror=e=>rej(e); }); }
+        };
+
         const app = {
-            data: { 
-                medicines: [], 
-                users: [], 
-                combinations: [], 
-                settings: { types: [], indications: [], usages: [], dosages: [], precautions: [], shapes: [] } 
-            },
-            state: { 
-                tempImages: { med: null, pres: null }, 
-                confirmCallback: null, 
-                historyFilterUid: null, 
-                activeCategory: 'types', 
-                selectedMedIds: [], 
-                editMode: { key: null, item: null }, 
-                filters: { types: [], indications: [], shapes: [], users: [] }, 
-                activeDropdown: null 
-            },
+            data: { medicines: [], users: [], combinations: [], settings: { types: [], indications: [], usages: [], dosages: [], precautions: [], shapes: [] } },
+            state: { tempImages: { med: null, pres: null }, confirmCallback: null, historyFilterUid: null, activeCategory: 'types', selectedMedIds: [], editMode: { key: null, item: null }, filters: { types: [], indications: [], shapes: [], users: [] }, activeDropdown: null },
 
-            init() {
-                this.loadData();
+            async init() {
                 document.getElementById('currentDateDisplay').innerText = new Date().toLocaleDateString('zh-TW');
-                document.addEventListener('click', (e) => { 
-                    if (!e.target.closest('.relative.group')) this.closeAllDropdowns(); 
-                });
+                document.addEventListener('click', (e) => { if (!e.target.closest('.relative.group')) this.closeAllDropdowns(); });
+                await this.loadData();
             },
 
-            loadData() {
-                const stored = localStorage.getItem('medPairData_v2');
-                if (stored) { 
-                    try { this.data = { ...this.data, ...JSON.parse(stored) }; } catch(e){} 
-                }
-                this.ensureDefaults(); 
-                this.refreshUI();
+            async loadData() {
+                try {
+                    const idbData = await IDBStorage.load();
+                    if (idbData) {
+                        this.data = { ...this.data, ...idbData };
+                    } else {
+                        // Fallback to LS if IDB empty (migration)
+                        const lsData = localStorage.getItem('medPairData_v2');
+                        if (lsData) {
+                            try { this.data = { ...this.data, ...JSON.parse(lsData) }; await IDBStorage.save(this.data); localStorage.removeItem('medPairData_v2'); } catch(e){}
+                        }
+                    }
+                } catch(e) { console.error('Load Error', e); }
+                this.ensureDefaults(); this.refreshUI();
             },
 
-            saveData() {
-                localStorage.setItem('medPairData_v2', JSON.stringify(this.data));
+            async saveData() {
+                try { await IDBStorage.save(this.data); } catch(e){ console.error('Save Error', e); this.showToast('儲存失敗'); }
                 this.refreshUI();
             },
 
             refreshUI() {
-                this.checkExpiry(); 
-                this.renderHistory(); 
-                this.populateFilters(); 
-                this.renderReport();
+                this.checkExpiry(); this.renderHistory(); this.populateFilters(); this.renderReport();
                 if(document.getElementById('settingsModal').classList.contains('active')) {
                     if(this.state.activeCategory) this.renderSettingsCats();
                     if(document.getElementById('tabMedicines').style.display !== 'none') this.renderSettingsMedicines();
@@ -453,24 +263,16 @@
 
             ensureDefaults() {
                 let changed = false;
-                if (!this.data.users || this.data.users.length === 0) { 
-                    this.data.users = [{id:generateId(),name:'爸爸'},{id:generateId(),name:'媽媽'},{id:generateId(),name:'自己'}]; 
-                    changed = true; 
-                }
-                if (!this.data.settings.types || this.data.settings.types.length === 0) { 
-                    this.data.settings.types = ['醫療藥品', '保健食品']; 
-                    changed = true; 
-                }
+                if (!this.data.users || this.data.users.length === 0) { this.data.users = [{id:generateId(),name:'爸爸'},{id:generateId(),name:'媽媽'},{id:generateId(),name:'自己'}]; changed = true; }
+                if (!this.data.settings.types || this.data.settings.types.length === 0) { this.data.settings.types = ['醫療藥品', '保健食品']; changed = true; }
                 const sets = ['indications', 'usages', 'dosages', 'precautions', 'shapes'];
                 sets.forEach(k => { if (!this.data.settings[k]) this.data.settings[k] = []; });
-                
                 if(this.data.settings.indications.length < 3) { this.data.settings.indications = ['感冒', '頭痛', '腸胃不適', '過敏', '外傷']; changed = true; }
                 if(this.data.settings.usages.length < 3) { this.data.settings.usages = ['飯後服用', '飯前服用', '睡前服用', '外用塗抹', '必要時使用']; changed = true; }
                 if(this.data.settings.dosages.length < 3) { this.data.settings.dosages = ['每次 1 顆', '每次 2 顆', '一天 3 次', '一天 1 次', '睡前服用']; changed = true; }
                 if(this.data.settings.precautions.length < 3) { this.data.settings.precautions = ['導致嗜睡', '多喝水', '不可飲酒', '孕婦不宜']; changed = true; }
                 if(this.data.settings.shapes.length < 3) { this.data.settings.shapes = ['膠囊', '圓形顆粒', '六角形', '膏狀', '藥包/粉狀', '液體/藥水']; changed = true; }
                 
-                // Data Migration
                 this.data.medicines.forEach(m => { 
                     if(m.usage && !Array.isArray(m.usage)) m.usage = [m.usage]; 
                     if(m.dosage && !Array.isArray(m.dosage)) m.dosage = [m.dosage];
@@ -528,7 +330,6 @@
                 if(tabId==='tabCats') this.renderSettingsCats();
                 if(tabId==='tabUsers') this.renderSettingsUsers();
             },
-            
             renderSettingsMedicines() {
                 const c = document.getElementById('settingsMedicineList');
                 if(!this.data.medicines.length) { c.innerHTML='<div class="col-span-full text-center text-gray-400 py-10">尚無資料</div>'; return; }
@@ -691,14 +492,14 @@
                             <div class="flex-grow min-w-0">
                                 <div class="flex flex-col sm:flex-row justify-between items-start gap-2">
                                     <div class="flex items-center gap-2"><h3 class="font-bold text-lg text-gray-800">${m.name}</h3>${m.prescription?`<button onclick="event.preventDefault();window.app.viewImage('${m.prescription}')" class="text-accent underline font-bold text-sm">處方籤</button>`:''}</div>
-                                    <span class="text-xs bg-${t}-50 text-${t}-700 px-2 py-1 rounded-md font-medium flex-shrink-0">${inds||'未分類'}</span>
+                                    <span class="text-xs bg-${t}-50 text-${t}-700 px-2 py-1 rounded-md font-medium flex-shrink-0 whitespace-normal break-words">${inds||'未分類'}</span>
                                 </div>
                                 <p class="text-xs text-gray-400 mb-1">${m.scientificName||''}</p>
                                 <div class="grid grid-cols-2 gap-x-4 gap-y-1 mt-2 text-sm text-gray-600">
-                                    <p class="truncate"><i class="fa-regular fa-clock w-4 text-center mr-1"></i> ${uses}</p>
-                                    <p class="truncate"><i class="fa-solid fa-eye-dropper w-4 text-center mr-1"></i> ${doses}</p>
-                                    <p class="truncate"><i class="fa-solid fa-triangle-exclamation w-4 text-center mr-1"></i> ${precs}</p>
-                                    <p class="truncate"><i class="fa-solid fa-user-group w-4 text-center mr-1"></i> 適用: ${m.users.join('、')}</p>
+                                    <p class="whitespace-normal break-words"><i class="fa-regular fa-clock w-4 text-center mr-1 text-gray-400"></i> ${uses}</p>
+                                    <p class="whitespace-normal break-words"><i class="fa-solid fa-eye-dropper w-4 text-center mr-1 text-gray-400"></i> ${doses}</p>
+                                    <p class="whitespace-normal break-words"><i class="fa-solid fa-triangle-exclamation w-4 text-center mr-1 text-gray-400"></i> ${precs}</p>
+                                    <p class="whitespace-normal break-words"><i class="fa-solid fa-user-group w-4 text-center mr-1 text-gray-400"></i> 適用: ${m.users.join('、')}</p>
                                 </div>
                             </div>
                         </div>
@@ -779,22 +580,14 @@
                 // Helper for Multi-Select Checkboxes with dynamic theme color
                 const fill=(id, items, n, sel)=>{
                     const container = document.getElementById(id);
-                    // Determine selection: m could be medicine object OR the simple selection object from handleTypeChange
-                    // Check if 'sel' passed directly (e.g. m?.indication) OR if m has property n (e.g. m.indication)
-                    // If m is null, sel is undefined. 
-                    // If m is selection object from handleTypeChange, it has keys like 'indication' not 'medIndication'
-                    
-                    // Let's normalize selection array
                     let arr = [];
                     if(m) {
-                        // if m comes from handleTypeChange (keys: indication, usage, etc)
-                        // map 'medIndication' -> 'indication'
                         const keyMap = { 'medIndication': 'indication', 'medUsage': 'usage', 'medDosage': 'dosage', 'medPrecaution': 'precaution' };
                         const dataKey = keyMap[n];
                         
-                        if(m[dataKey]) arr = m[dataKey]; // from handleTypeChange object
-                        else if(m[n]) arr = m[n]; // direct property? unlikely based on code
-                        else if(sel) arr = Array.isArray(sel) ? sel : [sel]; // from editMedicine pass
+                        if(m[dataKey]) arr = m[dataKey];
+                        else if(m[n]) arr = m[n];
+                        else if(sel) arr = Array.isArray(sel) ? sel : [sel];
                     } else if(sel) {
                         arr = Array.isArray(sel) ? sel : [sel];
                     }
